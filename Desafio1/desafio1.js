@@ -1,6 +1,7 @@
 /* DESAFIO 1 */
 
 class User{
+    
   constructor ( nombre, apellido, libros, mascotas ){
       this.nombre = nombre
       this.apellido = apellido
