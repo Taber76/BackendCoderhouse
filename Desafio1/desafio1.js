@@ -1,7 +1,7 @@
 /* DESAFIO 1 */
 
 class User{
-    
+
   constructor ( nombre, apellido, libros, mascotas ){
       this.nombre = nombre
       this.apellido = apellido
@@ -22,7 +22,7 @@ class User{
   }
 
   addBook( Nombre, Autor ){
-      this.libros.push({ nombre:Nombre, autor:Autor })
+      this.libros.push({ nombre: Nombre, autor: Autor })
   }
 
   getBookNames(){
