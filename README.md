@@ -23,8 +23,18 @@ getBookNames(): String[]. Retorna un array con sólo los nombres del array de li
 ## Segundo desafio
 >Implementar programa que contenga una clase llamada Contenedor que reciba el nombre del archivo con el que va a trabajar e implemente los siguientes métodos:
 
-save(Object): Number - Recibe un objeto, lo guarda en el archivo, devuelve el id asignado.
-getById(Number): Object - Recibe un id y devuelve el objeto con ese id, o null si no está.
-getAll(): Object[] - Devuelve un array con los objetos presentes en el archivo.
-deleteById(Number): void - Elimina del archivo el objeto con el id buscado.
-deleteAll(): void - Elimina todos los objetos presentes en el archivo. */
+1) save(Object): Number - Recibe un objeto, lo guarda en el archivo, devuelve el id asignado.
+2) getById(Number): Object - Recibe un id y devuelve el objeto con ese id, o null si no está.
+3) getAll(): Object[] - Devuelve un array con los objetos presentes en el archivo.
+4) deleteById(Number): void - Elimina del archivo el objeto con el id buscado.
+5) deleteAll(): void - Elimina todos los objetos presentes en el archivo. */
+
+
+## Tercer desafio
+> Realizar un proyecto de servidor basado en node.js que utilice el módulo express e implemente los siguientes endpoints en el puerto 8080:
+
+1) Ruta get '/productos' que devuelva un array con todos los productos disponibles en el servidor
+2) Ruta get '/productoRandom' que devuelva un producto elegido al azar entre todos los productos disponibles
+3) Incluir un archivo de texto 'productos.txt' y utilizar la clase Contenedor del desafío anterior para acceder a los datos persistidos del servidor.
+
+Antes de iniciar el servidor, colocar en el archivo 'productos.txt' tres productos como en el ejemplo del desafío anterior.

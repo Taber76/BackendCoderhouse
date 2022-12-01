@@ -1,0 +1,19 @@
+{
+  "name": "backend-40845",
+  "version": "1.0.0",
+  "description": "## Primer desafio >1) Declarar una clase Usuario",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Taber76/BackendCoderhouse.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Taber76/BackendCoderhouse/issues"
+  },
+  "homepage": "https://github.com/Taber76/BackendCoderhouse#readme"
+}
