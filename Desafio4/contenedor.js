@@ -30,7 +30,7 @@ class Contenedor {
     }
   }
 
-  /*agrega nuevo objeto*/
+
   async save( object ) {
     const objects = await this.getAll()
     try{
@@ -67,7 +67,7 @@ class Contenedor {
     
     try {
       objects = objects.filter( ele => ele.id != id )
-      await this.saveFile( this.file, objects)
+      await this.saveFile( objects )
     
     } catch(err) {
       console.log(`Error: ${err}`)
