@@ -1,0 +1,68 @@
+[
+  {
+    "id": 1,
+    "title": "producto1",
+    "price": 123,
+    "thumbnail": "url1"
+  },
+  {
+    "id": 2,
+    "title": "producto2",
+    "price": 123,
+    "thumbnail": "url2"
+  },
+  {
+    "id": 3,
+    "title": "producto3",
+    "price": 123,
+    "thumbnail": "url3"
+  },
+  {
+    "id": 4,
+    "title": "45",
+    "price": "45",
+    "thumbnail": "45"
+  },
+  {
+    "id": "42ea0d9e-c048-4e26-ab92-ccef4fc6dd6b",
+    "title": "45",
+    "price": "45",
+    "thumbnail": "45"
+  },
+  {
+    "id": "849ce4d5-9d05-45de-97cd-dbf2d25fd02d",
+    "title": "45",
+    "price": "45",
+    "thumbnail": "45"
+  },
+  {
+    "id": "46f980dc-7ac0-4bcc-b17d-857c4c2b71ac",
+    "title": "",
+    "price": "",
+    "thumbnail": ""
+  },
+  {
+    "id": "db82d3ac-e885-4784-a80d-1c3968c33cfe",
+    "title": "trtr",
+    "price": "453",
+    "thumbnail": "hfghgf"
+  },
+  {
+    "id": "4aaba7ad-4fbf-42c2-a636-2343b7830270",
+    "title": "54",
+    "price": "54",
+    "thumbnail": "54"
+  },
+  {
+    "id": "23976b35-6eb2-469d-8f16-fe5888371dfc",
+    "title": "54",
+    "price": "54",
+    "thumbnail": "54"
+  },
+  {
+    "id": "0f32d54f-4ca0-43b1-81e6-e225c2c8b7b5",
+    "title": "76",
+    "price": "76",
+    "thumbnail": "76"
+  }
+]
