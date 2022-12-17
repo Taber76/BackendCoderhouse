@@ -21,36 +21,47 @@ const express = require('express')
 
 const productRouter = require('./routes/productRouter')
 
-const PORT = 8080
-const app = express()
-
-
 const ProductClass = require('./class/productsClass')
 const products = new ProductClass('./data/products.txt')
-const productos = products.getAll()
-console.log('esto es lo que hay: ', productos)
 
+const PORT = 8080
+const app = express()
 
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
+
+
+//----------------------
+
 app.set('views', './views')
 
 const motorPlantillas = 'ejs'
-/* Motor de plantillas a utilizar*/
+// Motor de plantillas a utilizar
 app.set('view engine', motorPlantillas)
 
 
-const plantilla = 'ejs/table.ejs'
-/* Se muestra la plantilla */
+// Plantillas 
 app.get('/', (req, res) => {
-  res.render(plantilla, { productos })
+  res.render('ejs/form.ejs')
+})
+
+app.get('/productos', async (req, res) => {
+  let productos = await products.getAll()
+  res.render('ejs/table.ejs', { productos })
 })
 
 
-/* ROUTER productRouter */
+
+//----------------------
+
+/* API ROUTER productRouter */
 app.use('/api', productRouter)
 
+
+
+
+//-----------------------
 
 const server = app.listen(PORT, () =>
 	console.log(`Server running on port ${PORT}`)

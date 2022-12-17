@@ -6,6 +6,8 @@ const productRouter = Router() /* const productRoute = require('express').Router
 const ProductClass = require('../class/productsClass')
 const products = new ProductClass('./data/products.txt')
 
+
+/* ------- router productos -------- */
 /*get productos*/
 productRouter.get('/productos', async (req, res) => {
   const allProducts = await products.getAll()
@@ -23,8 +25,8 @@ productRouter.get('/productos/:id', async (req, res) => {
 /*post producto*/
 productRouter.post('/productos', async (req, res) => {
   const productToAdd = req.body
-  const idNew = await products.save( productToAdd )
-  res.send({ idNew })
+  await products.save( productToAdd )
+  res.redirect('/')
 })
 
 

@@ -1,7 +1,10 @@
 <%- include('./header.ejs') %>
 
-  <h2>Formulario</h2>
-  <h1>Ingreso de nuevo producto </h1>
+  <div class="container">
+    <div class="alert alert-primary text-center" role="alert">
+      INGRESO DE NUEVO PRODUCTO
+    </div>
+  </div>
 
   <form class="container" action="/api/productos" method="POST" >
      <div class="mb-3">
@@ -20,5 +23,5 @@
      <button type="submit" class="btn btn-primary">Guardar</button>
    </form>
 
-</body>
-</html>
+  </body>
+  </html>
