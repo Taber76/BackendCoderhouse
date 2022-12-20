@@ -28,5 +28,11 @@
     "title": "Bicicleta",
     "price": "6580",
     "thumbnail": "https://cdn4.iconfinder.com/data/icons/sports-outline-24-px/24/bycicle_cycling_speed_transport_sports-512.png"
+  },
+  {
+    "id": "5f8a3149-0117-4ad1-9a85-fb16684ff659",
+    "title": "Router wifi",
+    "price": "4500",
+    "thumbnail": "https://cdn1.iconfinder.com/data/icons/bootstrap-fill-vol-2/16/router-fill-512.png"
   }
 ]

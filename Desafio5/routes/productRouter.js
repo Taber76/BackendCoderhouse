@@ -1,10 +1,8 @@
 const express = require('express')
+const products = require('../class/productsClass')
 
 const { Router } = express    /**/
 const productRouter = Router() /* const productRoute = require('express').Router() */
-
-const ProductClass = require('../class/productsClass')
-const products = new ProductClass('./data/products.txt')
 
 
 /* ------- router productos -------- */

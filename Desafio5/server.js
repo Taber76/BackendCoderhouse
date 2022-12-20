@@ -1,47 +1,62 @@
-/*
-Realizar un proyecto de servidor basado en node.js y express que ofrezca una API RESTful de productos.
-
-En detalle, que incorpore las siguientes rutas:
-GET '/api/productos' -> devuelve todos los productos.
-GET '/api/productos/:id' -> devuelve un producto según su id.
-POST '/api/productos' -> recibe y agrega un producto, y lo devuelve con su id asignado.
-PUT '/api/productos/:id' -> recibe y actualiza un producto según su id.
-DELETE '/api/productos/:id' -> elimina un producto según su id.
-
-Para el caso de que un producto no exista, se devolverá el objeto:
-{ error : 'producto no encontrado' }
-Implementar la API en una clase separada, utilizando un array como soporte de persistencia en memoria.
-Incorporar el Router de express en la url base '/api/productos' y configurar todas las subrutas en base a este.
-Crear un espacio público de servidor que contenga un documento index.html con un formulario de ingreso de productos con los datos apropiados.
-El servidor debe estar basado en express y debe implementar los mensajes de conexión al puerto 8080 y en caso de error, representar la descripción del mismo.
-Las respuestas del servidor serán en formato JSON. La funcionalidad será probada a través de Postman y del formulario de ingreso.
+/* 
+Consigna:  
+1.Utilizando la misma API de productos del proyecto entregable de la clase anterior, construir un web server (no REST) que incorpore:
+  a)Un formulario de carga de productos en la ruta raíz (configurar la ruta '/productos' para recibir el POST, y redirigir al mismo formulario).
+  b)Una vista de los productos cargados (utilizando plantillas de handlebars) en la ruta GET '/productos'.
+  c)Ambas páginas contarán con un botón que redirija a la otra.  
+2.Manteniendo la misma funcionalidad reemplazar el motor de plantillas handlebars por pug.
+3.Manteniendo la misma funcionalidad reemplazar el motor de plantillas handlebars por ejs.
+4.Por escrito, indicar cuál de los tres motores de plantillas prefieres para tu proyecto y por qué.
 */
 
 const express = require('express')
-
 const productRouter = require('./routes/productRouter')
+const products = require('./class/productsClass')
+const path = require ("path")
 
-const ProductClass = require('./class/productsClass')
-const products = new ProductClass('./data/products.txt')
-
-const PORT = 8080
 const app = express()
-
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
 
-
-//----------------------
-
-app.set('views', './views')
-
-const motorPlantillas = 'ejs'
-// Motor de plantillas a utilizar
-app.set('view engine', motorPlantillas)
+//---------PLANTILLAS
+app.set('views', path.resolve(__dirname, './views'))
 
 
-// Plantillas 
+/*
+//---------------------------------------------- HBS
+const {engine}=require("express-handlebars")
+app.engine("handlebars", engine())
+app.set("view engine", "handlebars")
+
+app.get('/', (req, res) => {
+  res.render('hbs/form')
+})
+
+app.get('/productos', async (req, res) => {
+  let productos = await products.getAll()
+  res.render('hbs/table', { productos })
+})
+*/
+
+/*
+//----------------------------------------------- PUG
+app.set('view engine', "pug")
+
+app.get('/', (req, res) => {
+  res.render('pug/form.pug')
+})
+
+app.get('/productos', async (req, res) => {
+  let productos = await products.getAll()
+  res.render('pug/table.pug', { productos })
+})
+*/
+
+
+//----------------------------------------------- EJS
+app.set('view engine', "ejs")
+
 app.get('/', (req, res) => {
   res.render('ejs/form.ejs')
 })
@@ -52,17 +67,16 @@ app.get('/productos', async (req, res) => {
 })
 
 
+//-------- FIN PLANTILLAS
 
-//----------------------
 
-/* API ROUTER productRouter */
+//----- API ROUTER productRouter
 app.use('/api', productRouter)
 
 
 
-
-//-----------------------
-
+//-----SERVER ON
+const PORT = 8080
 const server = app.listen(PORT, () =>
 	console.log(`Server running on port ${PORT}`)
 )
