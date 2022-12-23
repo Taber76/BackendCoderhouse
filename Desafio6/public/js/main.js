@@ -1,5 +1,19 @@
 const socket = io.connect();
 
+//-------------------------
+
+function validateEmail(email) {
+  const mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
+  if(email.match(mailformat)) {
+    return true
+  } else {
+    alert("You have entered an invalid email address!");
+    return false
+  }
+}
+
+
+
 //----------------------
 //--- TABLA DE PRODUCTOS
 
@@ -53,7 +67,7 @@ const userEmail = document.getElementById("userEmail")
 const userMensaje = document.getElementById("userMsj")
 
 document.getElementById("sendBtn").addEventListener("click", ev => {
-  if ( userEmail.value ) {
+  if ( validateEmail(userEmail.value) ) {
     if ( userMensaje.value ){
 
       socket.emit('newMsj', {
@@ -61,11 +75,11 @@ document.getElementById("sendBtn").addEventListener("click", ev => {
         mensaje: userMensaje.value
        })
 
+       userMensaje.value = ''
+
     } else {
-      console.log("Sin mensaje")
+      alert("Ingrese un mensaje!")
     }
-  } else {
-    console.log("Sin email")
   }
 })
 
@@ -77,7 +91,11 @@ socket.on('mensajes', data => {
   
   mensajes.forEach(( element ) => {
     htmlChatToRender = htmlChatToRender + `
-    <p>User: ${element.user} ${element.date} ${element.mensaje}</p>
+    <div>
+      <div class="user">User: ${element.user} </div>
+      <div class="date">${element.date} </div>
+      <div class="mensaje">${element.mensaje}</div>
+    </div>
     `
   })
   document.querySelector('#chat').innerHTML = htmlChatToRender

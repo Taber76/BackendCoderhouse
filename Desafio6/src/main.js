@@ -53,6 +53,7 @@ io.on('connection', async socket => {
       io.sockets.emit('productos', await products.getAll())
   })
 
+  
   //----- chat inicial
   socket.emit('mensajes', await chat.getAll());
 
