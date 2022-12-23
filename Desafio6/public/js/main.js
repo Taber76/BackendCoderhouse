@@ -11,7 +11,7 @@ formulario.addEventListener('submit', e => {
         price: formulario[1].value,
         thumbnail: formulario[2].value
     }
-    socket.emit('update', producto);
+    socket.emit('update', producto)
     formulario.reset()
 })
 
@@ -50,13 +50,19 @@ socket.on('productos', data => {
 //--- CHAT
 
 const userEmail = document.getElementById("userEmail")
-const userMensaje = document.getElementById("userMensaje")
+const userMensaje = document.getElementById("userMsj")
+
 document.getElementById("sendBtn").addEventListener("click", ev => {
   if ( userEmail.value ) {
     if ( userMensaje.value ){
 
+      socket.emit('newMsj', {
+        user: userEmail.value,
+        mensaje: userMensaje.value
+       })
+
     } else {
-      console.log(userMensaje.value)
+      console.log("Sin mensaje")
     }
   } else {
     console.log("Sin email")
@@ -65,25 +71,14 @@ document.getElementById("sendBtn").addEventListener("click", ev => {
 
 
 
-
-
-
-
-
-
-
-
 socket.on('mensajes', data => {
   let mensajes = data
- 
   let htmlChatToRender = ``
   
   mensajes.forEach(( element ) => {
     htmlChatToRender = htmlChatToRender + `
-    <p>${element.user} ${element.fecha} ${element.mensaje}</p>
+    <p>User: ${element.user} ${element.date} ${element.mensaje}</p>
     `
-     
   })
-  
-    document.querySelector('#chat').innerHTML = htmlChatToRender
+  document.querySelector('#chat').innerHTML = htmlChatToRender
 })

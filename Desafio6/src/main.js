@@ -29,9 +29,8 @@ const productRouter = require('../routes/productRouter')
 
 const path = require ("path")
 
-//import { products, chat } from '../class/productsClass.js'
-products = require('../class/productsClass')
-const chat = require('../class/productsClass')
+const { products, chat } = require('../class/productsClass')
+
 
 
 //-------- middlewares
@@ -40,8 +39,8 @@ app.use(express.urlencoded({ extended: true }))
 app.use(express.static('./public'))
 
 
-//-----------------
-//-----------SOCKET
+//-------------------------------------------------
+//------------------------------------------SOCKET
 io.on('connection', async socket => {
   console.log('Nuevo cliente conectado!')
 
@@ -56,14 +55,15 @@ io.on('connection', async socket => {
 
   //----- chat inicial
   socket.emit('mensajes', await chat.getAll());
-/*
+
   //----- nuevo mensaje
-  socket.on('nuevoMensaje', async mensaje => {
-      mensaje.fyh = new Date().toLocaleString()
-      await mensajesApi.guardar(mensaje)
-      io.sockets.emit('mensajes', await mensajesApi.listarAll());
-  })*/
-});
+  socket.on('newMsj', async mensaje => {
+      mensaje.date = new Date().toLocaleString()
+      await chat.save( mensaje )
+      io.sockets.emit('mensajes', await chat.getAll());
+  })
+
+})
 
 
 //-------------------

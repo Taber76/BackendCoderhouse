@@ -82,4 +82,4 @@ const products = new Contanier('./data/products.txt')
 const chat = new Contanier('./data/chat.txt')
 
 //export { products, chat}
-module.exports = products, chat
+module.exports = { products, chat }
