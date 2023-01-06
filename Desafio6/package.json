@@ -1,10 +1,10 @@
 {
   "name": "desafio5",
   "version": "1.0.0",
-  "main": "contenedor.js",
+  "main": "./src/main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node /src/main.js"
+    "start": "node ."
   },
   "author": "",
   "license": "ISC",

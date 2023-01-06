@@ -21,16 +21,15 @@ Los mensajes deben persistir en el servidor en un archivo (ver segundo entregabl
 const express = require('express')
 const { Server: HttpServer } = require('http')
 const { Server: Socket } = require('socket.io')
-const app = express()
-const httpServer = new HttpServer(app)
-const io = new Socket(httpServer)
-
 const productRouter = require('../routes/productRouter')
-
 const path = require ("path")
 
 const { products, chat } = require('../class/productsClass')
 
+
+const app = express()
+const httpServer = new HttpServer(app)
+const io = new Socket(httpServer)
 
 
 //-------- middlewares
@@ -39,25 +38,26 @@ app.use(express.urlencoded({ extended: true }))
 app.use(express.static('./public'))
 
 
+
 //-------------------------------------------------
 //------------------------------------------SOCKET
 io.on('connection', async socket => {
   console.log('Nuevo cliente conectado!')
 
-  //------ tabla inicial
+  //------ tabla inicial al cliente
   socket.emit('productos', await products.getAll())
  
-  //------ nuevo producto
+  //------ nuevo producto desde cliente
   socket.on('update', async producto => {
       await products.save( producto )
       io.sockets.emit('productos', await products.getAll())
   })
 
   
-  //----- chat inicial
+  //----- chat inicial al cliente
   socket.emit('mensajes', await chat.getAll());
 
-  //----- nuevo mensaje
+  //----- nuevo mensaje desde el cliente
   socket.on('newMsj', async mensaje => {
       mensaje.date = new Date().toLocaleString()
       await chat.save( mensaje )
@@ -67,8 +67,8 @@ io.on('connection', async socket => {
 })
 
 
-//-------------------
-//---------PLANTILLAS
+//---------------------------------------------------
+//-----------------------------------------PLANTILLAS
 app.set('views', path.resolve(__dirname, '../public'))
 app.set('view engine', "ejs")
 
@@ -78,13 +78,13 @@ app.get('/', (req, res) => {
 
 
 
-//-----------------------------------
-//----- API REST ROUTER productRouter
+//--------------------------------------------------
+//-------------------- API REST ROUTER productRouter
 app.use('/api', productRouter)
 
 
 
-//-----SERVER ON
+//-----------------------------------------SERVER ON
 const PORT = 8080
 const server = httpServer.listen(PORT, () => {
     console.log(`Servidor http escuchando en el puerto ${server.address().port}`)

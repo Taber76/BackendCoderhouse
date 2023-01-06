@@ -1,0 +1,97 @@
+<%- include('./header.ejs') %>
+
+  <div id="soloAdministrador"></div>
+
+   <br>
+   <br id="tablaProd">
+   
+   <div class="container">
+    <div class="alert alert-primary text-center" role="alert">
+      PRODUCTOS
+    </div>
+  </div>
+  
+  <div class="container">
+    <div class="row d-flex justify-content-center" id="productos"></div>
+  </div>
+  
+  <br>
+ 
+  <div class="container">
+    <div class="alert alert-primary text-center" role="alert">
+      CARRITOS
+    </div>
+  </div>
+  
+  <div class="container">
+    <div class="row d-flex justify-content-center" id="carritos"></div>
+  </div>
+
+
+  <br>
+ 
+  <div class="container">
+    <div class="alert alert-primary text-center" role="alert">
+      OPERACIONES CON CARRITOS
+    </div>
+  </div>
+
+  <div class="container">
+
+    <div id= "" class="row d-flex justify-content-center">
+      <div class="col">
+        <button id="newCartBtn" type="" class="btn btn-primary">Nuevo carrito</button> 
+      </div>
+    </div>
+    
+    <br>
+
+    <div id= "" class="row d-flex justify-content-center">
+      <div class="col">      
+        <input type="text" class="form-control" id="idProdNew" aria-describedby="pHelp3">
+        <div id="pHelp3" class="form-text">Codigo producto a agregar</div>
+      </div>
+      <div class="col">      
+        <input type="text" class="form-control" id="idProdCartNew" aria-describedby="pHelp4">
+        <div id="pHelp4" class="form-text">Codigo del carrito</div>
+      </div>
+      <div class="col">
+        <button id="newItemCartBtn" type="" class="btn btn-primary">Agregar producto</button> 
+      </div>
+    </div>
+
+    <br>
+
+    <div id= "" class="row d-flex justify-content-center ">
+      <div class="col">      
+        <input type="text" class="form-control" id="idCartDel" aria-describedby="pHelp">
+        <div id="pHelp" class="form-text">ID de carrito a borrar</div>
+      </div>
+      <div class="col">
+        <button id="deleteCartBtn" type="" class="btn btn-primary">Borrar carrito</button> 
+      </div>
+    </div>
+    
+    <br>
+
+    <div id= "" class="row d-flex justify-content-center ">
+      <div class="col">      
+        <input type="text" class="form-control" id="idProdDel" aria-describedby="pHelp1">
+        <div id="pHelp1" class="form-text">Codigo producto a borrar</div>
+      </div>
+      <div class="col">      
+        <input type="text" class="form-control" id="idProdCartDel" aria-describedby="pHelp2">
+        <div id="pHelp2" class="form-text">Codigo del carrito</div>
+      </div>
+      <div class="col">
+        <button id="deleteItemCartBtn" type="" class="btn btn-primary">Borrar producto</button> 
+      </div>
+    </div>
+
+
+
+  </div>
+  
+
+</body>
+</html>
