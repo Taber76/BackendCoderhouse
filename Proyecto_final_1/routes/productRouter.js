@@ -39,16 +39,15 @@ productRouter.put('/productos/:id', async (req, res) => {
   if (user.administrador){
     const id = req.params.id
     const productToModify = req.body
-    if(await products.getById( id )){
-      let allProducts = await products.getAll()
-      allProducts[ id - 1 ] = {"id": id, ...productToModify}
+    let allProducts = await products.getAll() 
+    const index = allProducts.findIndex( item => item.id === id )
+    if ( index !== -1 ) {
+      allProducts.splice( index, 1, {...productToModify})
       products.saveFile( allProducts )
       res.send({ productToModify })
-    
     } else {
       res.status(404).send({ error: 'id no valido'})
     }
-
   } else {
     res.status(403).send({error: -1, descripcion: 'ruta /productos/id metodo PUT no autorizado'})
   }

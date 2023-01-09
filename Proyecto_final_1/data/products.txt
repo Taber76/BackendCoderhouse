@@ -78,12 +78,5 @@
     "price": "12500",
     "stock": "9",
     "thumbnail": "https://cdn1.iconfinder.com/data/icons/vehicles-and-travel-1/32/Vehicles_and_Transport_scooter_transport-512.png"
-  },
-  {
-    "id": "072cfa29-d44c-4cd7-85e3-8d20494e59ba",
-    "timestamp": "6/1/2023 14:02:34",
-    "title": "producto1",
-    "price": 123,
-    "thumbnail": "url1"
   }
 ]

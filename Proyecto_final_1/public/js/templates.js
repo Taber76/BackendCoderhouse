@@ -79,3 +79,14 @@ function templateCarritos( carritos ){
   })
   return html
 }
+
+
+function templateListaProductos( productos ){
+  let html = '<ul class="list-group">'
+  productos.forEach(( element ) => {
+    html = html + `
+    <li class="list-group-item">${element.title}-${element.description} id: ${element.id}</li>`
+  })
+  html = html + '</ul>'
+  return html
+}

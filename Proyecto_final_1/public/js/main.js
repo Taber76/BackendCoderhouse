@@ -53,7 +53,7 @@ if (user) {
 }
 
 
-//--- PRODUCTOS Y CARRITOS
+//--- PRODUCTOS Y CARRITOS en HTML
 socket.on('productos', productos => { 
   document.querySelector('#productos').innerHTML = templateProductos( productos )  
 })
@@ -62,60 +62,83 @@ socket.on('carritos', carritos => {
   document.querySelector('#carritos').innerHTML = templateCarritos( carritos )
 })
 
-//-------------------------------
+
+
+//----------------------------------------------
+
 
 const idProdNew = document.getElementById("idProdNew")
 const idProdCartNew = document.getElementById("idProdCartNew")
+const idCartList = document.getElementById("idCartList")
 const idCartDel = document.getElementById("idCartDel")
 const idProdDel = document.getElementById("idProdDel")
 const idProdCartDel = document.getElementById("idProdCartDel")
 
- 
+//--- Nuevo carrito 
 document.getElementById("newCartBtn").addEventListener("click", ev => {
   fetch('http://localhost:8080/api/carrito/', {
     method: 'POST'
   })
     .then((response) => response.text())
-    .then((text) => console.log(text))
-
-  socket.emit('newCart')
+    .then((text) => {
+      alert('Se ha creado carrito con id: ' + text)
+      socket.emit('newCart')
+    })
 })
 
+//-- Agregar producto en carrito
 document.getElementById("newItemCartBtn").addEventListener("click", ev => {
   fetch(`http://localhost:8080/api/carrito/${idProdCartNew.value}/productos/${idProdNew.value}`, {
     method: 'POST'
   })
     .then((response) => response.text())
-    .then((text) => console.log(text))
+    .then((text) => {
+      alert(text)
+      idProdNew.value = ''
+    })
 })
 
+//-- Listar productos del carrito
+document.getElementById("listItemCartBtn").addEventListener("click", ev => {
+  fetch(`http://localhost:8080/api/carrito/${idCartList.value}/productos/`, {
+    method: 'GET'
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      document.querySelector('#itemCartList').innerHTML = templateListaProductos( data )
+      idCartList.value = ''
+    })
+})
 
+//-- Borrar carrito
 document.getElementById("deleteCartBtn").addEventListener("click", ev => {
-  console.log(idCartDel.value)
   fetch(`http://localhost:8080/api/carrito/${idCartDel.value}`, {
-    method: 'DEL'
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'text/plain'
+    }
   })
     .then((response) => response.text())
-    .then((text) => console.log(text))
+    .then((text) => {
+      alert('Carrito ' + idCartDel.value + ' borrado.')
+      idCartDel.value = ''
+      socket.emit('newCart')
+    })
+})
+
+//-- Borrar elemento de carrito
+document.getElementById("deleteItemCartBtn").addEventListener("click", ev => {
+  fetch(`http://localhost:8080/api/carrito/${idProdCartDel.value}/productos/${idProdDel.value}`, {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'text/plain'
+    }
+  })
+    .then((response) => response.text())
+    .then((text) => {
+      console.log(text)
+      idProdDel.value = ''
+    })
 })
 
 
-
-
-/*
-document.getElementById("sendBtn").addEventListener("click", ev => {
-  if ( validateEmail(userEmail.value) ) {
-    if ( userMensaje.value ){
-
-      socket.emit('newMsj', {
-        user: userEmail.value,
-        mensaje: userMensaje.value
-       })
-
-       userMensaje.value = ''
-
-    } else {
-      alert("Ingrese un mensaje!")
-    }
-  }
-})*/

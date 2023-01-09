@@ -1,4 +1,3 @@
-
 const fs = require ('fs')
 const { v4: uuidv4 } = require('uuid')
 
@@ -44,6 +43,7 @@ class Contanier {
     }
   }
 
+  
   async addCart( cartId ) { //este metodo es unicamente para usar con carts
     const carts = await this.getAll()
     console.log(carts)

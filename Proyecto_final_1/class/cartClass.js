@@ -6,16 +6,12 @@ class Cart {
       this.file = file
   }
 
-  async newFile() {
-    
-  }
-
 
   async getAll() {
     try{
       const cart = await fs.promises.readFile( this.file, 'utf-8')
       const jsonCart = JSON.parse(cart)
-      return jsonCart.productos // devuelve array
+      return jsonCart.products // devuelve array
     } catch(err) {
       console.log(`Error: ${err}`)
     }
@@ -55,8 +51,6 @@ class Cart {
       console.log(`Error: ${err}`)
     }
   }
-
-
 }
 
 module.exports = Cart
