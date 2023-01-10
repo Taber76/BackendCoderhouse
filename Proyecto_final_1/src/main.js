@@ -1,7 +1,7 @@
 /* 
 >>Consigna: Deberás entregar el estado de avance de tu aplicación eCommerce Backend, que implemente un servidor de aplicación basado en la plataforma Node.js y el módulo express.
 El servidor implementará dos conjuntos de rutas agrupadas en routers, uno con la url base '/productos' y el otro con '/carrito'.
-El puerto de escucha será el 8080 para desarrollo y process.env.PORT para producción en glitch.com <----------------------------------------------------------
+El puerto de escucha será el 8080 para desarrollo y process.env.PORT para producción en glitch.com
 
 >>Aspectos a incluir en el entregable: 
 
@@ -36,7 +36,6 @@ Realizar una aplicación frontend sencilla, utilizando HTML/CSS/JS ó algún fra
 En cada card figuran los datos del producto, que, en el caso de ser administradores, podremos editar su información. Para este último caso incorporar los botones actualizar y eliminar.
 También tendremos un formulario de ingreso de productos nuevos con los campos correspondientes y un botón enviar.
 Asimismo, construir la vista del carrito donde se podrán ver los productos agregados e incorporar productos a comprar por su id de producto.
-
 Esta aplicación de frontend debe enviar los requests get, post, put y delete al servidor utilizando fetch y debe estar ofrecida en su espacio público.
 En todos los casos, el diálogo entre el frontend y el backend debe ser en formato JSON. El servidor no debe generar ninguna vista.
 En el caso de requerir una ruta no implementada en el servidor, este debe contestar un objeto de error: ej { error : -2, descripcion: ruta 'x' método 'y' no implementada}, status code: 404
@@ -53,7 +52,7 @@ const productRouter = require('../routes/productRouter')
 const cartRouter = require('../routes/cartRouter')
 const path = require ("path")
 
-const { products, carts } = require('../class/productsClass')
+const { products, carts } = require('../api/productsClass')
 
 
 const app = express()
@@ -105,6 +104,10 @@ app.use('/api', productRouter)
 //---- cartRouter
 app.use('/api', cartRouter)
 
+//---- error 404
+app.use(function(req, res) {
+  res.status(404).send({error: -1, descripcion: 'ruta no implementada'})
+})
 
 
 //-----------------------------------------SERVER ON

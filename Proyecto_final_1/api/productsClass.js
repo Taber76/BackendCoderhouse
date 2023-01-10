@@ -11,7 +11,7 @@ class Contanier {
   async getAll() {
     try{
       const products = await fs.promises.readFile( this.file, 'utf-8')
-      return JSON.parse(products)
+      return JSON.parse( products )
     } catch(err) {
       console.log(`Error: ${err}`)
     }
@@ -29,7 +29,7 @@ class Contanier {
   }
 
 
-  async save( product ) {
+  async save( product ) { // agrega un item
     const products = await this.getAll()
     try{
         const idNew =  uuidv4()
@@ -46,7 +46,6 @@ class Contanier {
   
   async addCart( cartId ) { //este metodo es unicamente para usar con carts
     const carts = await this.getAll()
-    console.log(carts)
     try{
         const newCart = { timestamp:new Date().toLocaleString(), id: cartId }       
         carts.push(newCart)        

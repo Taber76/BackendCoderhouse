@@ -7,18 +7,18 @@ class Cart {
   }
 
 
-  async getAll() {
+  async getAll() { //devuelve Json con todos los productos
     try{
       const cart = await fs.promises.readFile( this.file, 'utf-8')
       const jsonCart = JSON.parse(cart)
-      return jsonCart.products // devuelve array
+      return jsonCart.products 
     } catch(err) {
       console.log(`Error: ${err}`)
     }
   }
  
   
-  async saveFile ( cart ) {
+  async saveFile ( cart ) { // guarda el carrito en un archivo
     try {
       await fs.promises.writeFile(
         this.file, JSON.stringify( cart, null, 2 )
@@ -29,7 +29,7 @@ class Cart {
   }
 
 
-  async add( idProduct ) {
+  async add( idProduct ) { // agrega producto al carrito
     const products = await this.getAll()
     try{   
         products.push( idProduct )        
@@ -41,7 +41,7 @@ class Cart {
     }
   }
 
-  async deleteById( id ) {
+  async deleteById( id ) { // borra producto del carrito
     let products = await this.getAll()  
     try {
       products = products.filter( ele => ele.id != id )

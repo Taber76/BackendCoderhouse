@@ -1,5 +1,5 @@
 const socket = io.connect()
-user = true
+const administrador = true // USUARIO ADMINISTRADOR /////////////////////////////////////////////////////////////////////////////////
 
 //-------------------------
 
@@ -23,7 +23,7 @@ function validateProducto(producto) { // retorna true si hay algun campo vacio
 //-------------------------------------------------
 //------------------ FORMULARIO
 // se muestra formulario si el usuario es administrador
-if (user) {
+if (administrador) {
 
   const htmlNewProductForm = templateForm()
  

@@ -2,14 +2,12 @@ const express = require('express')
 const fs = require('fs')
 const { v4: uuidv4 } = require('uuid')
 
-const { products, carts } = require('../class/productsClass')
-const Cart = require('../class/cartClass')
+const { products, carts } = require('../api/productsClass')
+const Cart = require('../api/cartClass')
 
 const { Router } = express 
 const cartRouter = Router() 
 
-
-/* ------- router carrito --------*/ 
 
 
 //------------POST Carrito
@@ -33,7 +31,7 @@ cartRouter.delete('/carrito/:id', async (req, res) => {
 })
 
 
-//------------GET productos del carrito
+//------------GET todos los productos del carrito
 cartRouter.get('/carrito/:id/productos', async (req, res) => {
   const id = req.params.id
   const cart = new Cart(`./data/${id}.txt`)
@@ -67,9 +65,6 @@ cartRouter.delete('/carrito/:id/productos/:id_prod', async (req, res) => {
   await cart.deleteById( itemId )
   res.send('Producto borrado exitosamente')
 })
-
-
-
 
 
 
