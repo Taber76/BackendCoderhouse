@@ -15,6 +15,9 @@ El formato a representar será: email (texto negrita en azul) [fecha y hora (DD/
 Además incorporar dos elementos de entrada: uno para que el usuario ingrese su email (obligatorio para poder utilizar el chat) y otro para ingresar mensajes y enviarlos mediante un botón. 
 Los mensajes deben persistir en el servidor en un archivo (ver segundo entregable).
 
+Agregando bases de datos
+SQLite3 para mensajes
+MariaDB para productos
 */
 
 const express = require('express')
@@ -23,16 +26,30 @@ const { Server: Socket } = require('socket.io')
 const productRouter = require('../routes/productRouter')
 const path = require ("path")
 
-const { products, chat } = require('../class/productsClass')
+
+const Container = require('../class/productsClass')
+
+const chat = new Container( 
+    {
+    client: 'sqlite3',
+    connection: { filename: './db/sqlite3db/ecommerce.sqlite' },
+    useNullAsDefault: true
+    },
+    'chat'
+)
+
 
 const app = express()
 const httpServer = new HttpServer(app)
 const io = new Socket(httpServer)
 
+
 //-------- middlewares
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use(express.static('./public'))
+
+
 
 //-------------------------------------------------
 //------------------------------------------SOCKET
@@ -40,13 +57,13 @@ io.on('connection', async socket => {
   console.log('Nuevo cliente conectado!')
 
   //------ tabla inicial al cliente
-  socket.emit('productos', await products.getAll())
+  //socket.emit('productos', await products.getAll())
  
   //------ nuevo producto desde cliente
-  socket.on('update', async producto => {
-      await products.save( producto )
-      io.sockets.emit('productos', await products.getAll())
-  })
+  //socket.on('update', async producto => {
+  //    await products.save( producto )
+ //     io.sockets.emit('productos', await products.getAll())
+ // })
 
   
   //----- chat inicial al cliente
@@ -55,7 +72,7 @@ io.on('connection', async socket => {
   //----- nuevo mensaje desde el cliente
   socket.on('newMsj', async mensaje => {
       mensaje.date = new Date().toLocaleString()
-      await chat.save( mensaje )
+      await chat.add( mensaje )
       io.sockets.emit('mensajes', await chat.getAll());
   })
 
@@ -63,13 +80,8 @@ io.on('connection', async socket => {
 
 
 //---------------------------------------------------
-//-----------------------------------------PLANTILLAS
+//-----------------------------------------------HTML
 app.set('views', path.resolve(__dirname, '../public'))
-app.set('view engine', "ejs")
-
-app.get('/', (req, res) => {
-  res.render('form.ejs')
-})
 
 
 //--------------------------------------------------
