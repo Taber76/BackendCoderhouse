@@ -1,13 +1,13 @@
 const knex = require('knex');
 
-const MariaDb = {
+const mariaDb = knex({
   client: 'mysql',
   connection: {
     host: '127.0.0.1',
     user: 'root',
-    database: 'products',
+    database: 'ecommerce',
   }
-}
+})
 
 
 const sqlite3Db = knex({
@@ -16,4 +16,4 @@ const sqlite3Db = knex({
   useNullAsDefault: true
 })
 
-module.exports = { MariaDb, sqlite3Db }
+module.exports = { mariaDb, sqlite3Db }

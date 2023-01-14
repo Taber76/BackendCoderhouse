@@ -45,10 +45,10 @@ socket.on('productos', data => {
     </thead>
     </tbody>`
   
-  productos.forEach(( element, index) => {
+  productos.forEach(( element ) => {
     htmlToRender = htmlToRender + `
     <tr>
-      <th scope="row">${index + 1}</th>
+      <th scope="row">${element.id}</th>
       <td>${element.title}</td>
       <td>${element.price}</td>
       <td><img src=${element.thumbnail} style="max-width: 50px; height: auto;"</td>

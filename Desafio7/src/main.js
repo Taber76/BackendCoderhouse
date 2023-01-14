@@ -26,17 +26,7 @@ const { Server: Socket } = require('socket.io')
 const productRouter = require('../routes/productRouter')
 const path = require ("path")
 
-
-const Container = require('../class/productsClass')
-
-const chat = new Container( 
-    {
-    client: 'sqlite3',
-    connection: { filename: './db/sqlite3db/ecommerce.sqlite' },
-    useNullAsDefault: true
-    },
-    'chat'
-)
+const { chat, products } = require('../class/productsClass')
 
 
 const app = express()
@@ -57,13 +47,13 @@ io.on('connection', async socket => {
   console.log('Nuevo cliente conectado!')
 
   //------ tabla inicial al cliente
-  //socket.emit('productos', await products.getAll())
+  socket.emit('productos', await products.getAll())
  
   //------ nuevo producto desde cliente
-  //socket.on('update', async producto => {
-  //    await products.save( producto )
- //     io.sockets.emit('productos', await products.getAll())
- // })
+  socket.on('update', async producto => {
+    await products.add( producto )
+    io.sockets.emit('productos', await products.getAll())
+  })
 
   
   //----- chat inicial al cliente

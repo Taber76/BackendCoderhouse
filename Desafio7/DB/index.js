@@ -1,13 +1,16 @@
-const { sqlite3Db } = require('./config/conectToDb')
-const { createTableSqlite } = require("./model/sqlite3model")
+// Se ejecuta manualmente para crear las tablas
+
+
+const { mariaDb } = require('./config/conectToDb')
+const { createTableMariaDb } = require("./model/mariaDbmodel")
 
 const executeOperations = async () => {
   try {
-    await createTableSqlite()
+    await createTableMariaDb()
   } catch (err) {
     console.error(`No se ha podido crear la tabla`, err.message)
   } finally {
-    sqlite3Db.destroy()
+    mariaDb.destroy()
   }
 }
 
