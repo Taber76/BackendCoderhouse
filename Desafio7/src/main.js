@@ -71,7 +71,7 @@ io.on('connection', async socket => {
 
 //---------------------------------------------------
 //-----------------------------------------------HTML
-app.set('views', path.resolve(__dirname, '../public'))
+//app.set('views', path.resolve(__dirname, '../public'))
 
 
 //--------------------------------------------------

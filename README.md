@@ -1,7 +1,7 @@
 # BackendCoderhouse
 
-## Primer desafio
->1) Declarar una clase Usuario
+## Primer desafio || Clases y objetos
+>1) Declarar una clase Usuario 
 
 >2) Hacer que Usuario cuente con los siguientes atributos:
 nombre: String
@@ -20,7 +20,7 @@ getBookNames(): String[]. Retorna un array con sólo los nombres del array de li
 >4) Crear un objeto llamado usuario con valores arbitrarios e invocar todos sus métodos.
 
 
-## Segundo desafio
+## Segundo desafio || Clases y Objetos
 >Implementar programa que contenga una clase llamada Contenedor que reciba el nombre del archivo con el que va a trabajar e implemente los siguientes métodos:
 
 1) save(Object): Number - Recibe un objeto, lo guarda en el archivo, devuelve el id asignado.
@@ -30,7 +30,7 @@ getBookNames(): String[]. Retorna un array con sólo los nombres del array de li
 5) deleteAll(): void - Elimina todos los objetos presentes en el archivo. */
 
 
-## Tercer desafio
+## Tercer desafio || Express
 > Realizar un proyecto de servidor basado en node.js que utilice el módulo express e implemente los siguientes endpoints en el puerto 8080:
 
 1) Ruta get '/productos' que devuelva un array con todos los productos disponibles en el servidor
@@ -40,7 +40,7 @@ getBookNames(): String[]. Retorna un array con sólo los nombres del array de li
 Antes de iniciar el servidor, colocar en el archivo 'productos.txt' tres productos como en el ejemplo del desafío anterior.
 
 
-## Cuarto desafio
+## Cuarto desafio || API RESTful
 > Realizar un proyecto de servidor basado en node.js y express que ofrezca una API RESTful de productos.
 
 En detalle, que incorpore las siguientes rutas:
@@ -62,7 +62,7 @@ En detalle, que incorpore las siguientes rutas:
 
 > Las respuestas del servidor serán en formato JSON. La funcionalidad será probada a través de Postman y del formulario de ingreso.
 
-## Quinto desafio
+## Quinto desafio || Router
 
 > Utilizando la misma API de productos del proyecto entregable de la clase anterior, construir un web server (no REST) que incorpore:
 1) Un formulario de carga de productos en la ruta raíz (configurar la ruta '/productos' para recibir el POST, y redirigir al mismo formulario).
@@ -74,7 +74,7 @@ En detalle, que incorpore las siguientes rutas:
 
 > Por escrito, indicar cuál de los tres motores de plantillas prefieres para tu proyecto y por qué
 
-## Sexto desafio
+## Sexto desafio || Websocket
 
 > Consigna 1:  Modificar el último entregable para que disponga de un canal de websocket que permita representar, por debajo del formulario de ingreso, 
 > una tabla con la lista de productos en tiempo real. 
@@ -90,3 +90,52 @@ En detalle, que incorpore las siguientes rutas:
 2) El formato a representar será: email (texto negrita en azul) [fecha y hora (DD/MM/YYYY HH:MM:SS)](texto normal en marrón) : mensaje (texto italic en verde) 
 3) Además incorporar dos elementos de entrada: uno para que el usuario ingrese su email (obligatorio para poder utilizar el chat) y otro para ingresar mensajes y enviarlos mediante un botón. 
 4) Los mensajes deben persistir en el servidor en un archivo (ver segundo entregable).
+
+## Septimo desafio || DATABASE's
+
+> Agregar persistencia de datos en bases de datos MariaDB y Sqlite3 al quinto desafio
+
+## Proyecto final ecommerce || Primer entrega
+
+> Consigna: Deberás entregar el estado de avance de tu aplicación eCommerce Backend, que implemente un servidor de aplicación basado en la plataforma Node.js y el módulo express.
+> El servidor implementará dos conjuntos de rutas agrupadas en routers, uno con la url base '/productos' y el otro con '/carrito'.
+> El puerto de escucha será el 8080 para desarrollo y process.env.PORT para producción en glitch.com
+
+1) Aspectos a incluir en el entregable: 
+> El router base '/api/productos' implementará cuatro funcionalidades:
+> GET: '/:id?' - Me permite listar todos los productos disponibles ó un producto por su id (disponible para usuarios y administradores)
+> POST: '/' - Para incorporar productos al listado (disponible para administradores)
+> PUT: '/:id' - Actualiza un producto por su id (disponible para administradores)
+> DELETE: '/:id' - Borra un producto por su id (disponible para administradores)
+
+2) El router base '/api/carrito' implementará tres rutas disponibles para usuarios y administradores:
+> POST: '/' - Crea un carrito y devuelve su id.
+> DELETE: '/:id' - Vacía un carrito y lo elimina.
+> GET: '/:id/productos' - Me permite listar todos los productos guardados en el carrito
+> POST: '/:id/productos/:id_prod' - Para incorporar productos al carrito por su id de producto
+> DELETE: '/:id/productos/:id_prod' - Eliminar un producto del carrito por su id de carrito y de producto
+
+3) Crear una variable booleana administrador, cuyo valor configuraremos más adelante con el sistema de login. Según su valor (true ó false) me permitirá alcanzar o no las rutas indicadas.
+> En el caso de recibir un request a una ruta no permitida por el perfil, devolver un objeto de error.
+> El status http de la respuesta debe ser 403. Ejemplo: { error : -1, descripcion: ruta 'x' método 'y' no autorizada }
+
+4) Un producto dispondrá de los siguientes campos:  id, timestamp, nombre, descripcion, código, foto (url), precio, stock.
+> El carrito de compras tendrá la siguiente estructura: id, timestamp(carrito), productos: [id]
+> El timestamp puede implementarse con Date.now()
+
+> Realizar la persistencia de productos y del carrito de compras en el filesystem.
+
+5) A tener en cuenta:
+> Para realizar la prueba de funcionalidad hay dos opciones:
+> Probar con postman cada uno de los endpoints (productos y carrito) y su operación en conjunto.
+
+6) Realizar una aplicación frontend sencilla, utilizando HTML/CSS/JS ó algún framework de preferencia, que represente el listado de productos en forma de cards.
+> En cada card figuran los datos del producto, que, en el caso de ser administradores, podremos editar su información. Para este último caso incorporar los botones actualizar y eliminar.
+> También tendremos un formulario de ingreso de productos nuevos con los campos correspondientes y un botón enviar.
+> Asimismo, construir la vista del carrito donde se podrán ver los productos agregados e incorporar productos a comprar por su id de producto.
+> Esta aplicación de frontend debe enviar los requests get, post, put y delete al servidor utilizando fetch y debe estar ofrecida en su espacio público.
+> En todos los casos, el diálogo entre el frontend y el backend debe ser en formato JSON. El servidor no debe generar ninguna vista.
+> En el caso de requerir una ruta no implementada en el servidor, este debe contestar un objeto de error: ej { error : -2, descripcion: ruta 'x' método 'y' no implementada}, status code: 404
+> La estructura de programación será ECMAScript, separada tres en módulos básicos (router, lógica de negocio/api y persistencia ). Más adelante implementaremos el desarrollo en capas.
+> Utilizar preferentemente clases, constructores de variables let y const y arrow function.
+> Realizar la prueba de funcionalidad completa en el ámbito local (puerto 8080) y en glitch.com
