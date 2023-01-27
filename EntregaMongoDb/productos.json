@@ -1,0 +1,49 @@
+[{
+  "_id": {
+    "$oid": "63c7fc22e7f91ce0a62b51ba"
+  },
+  "title": "Router wifi",
+  "price": 2675,
+  "thumbnail": "https://cdn1.iconfinder.com/data/icons/bootstrap-fill-vol-2/16/router-fill-512.png",
+  "stock": 100
+},{
+  "_id": {
+    "$oid": "63c7fc22e7f91ce0a62b51bb"
+  },
+  "title": "Motocicleta",
+  "price": 3556,
+  "thumbnail": "https://cdn3.iconfinder.com/data/icons/font-awesome-solid/640/motorcycle-512.png",
+  "stock": 100
+},{
+  "_id": {
+    "$oid": "63c7fc22e7f91ce0a62b51bc"
+  },
+  "title": "Monopatin",
+  "price": 3927,
+  "thumbnail": "https://cdn1.iconfinder.com/data/icons/vehicles-and-travel-1/32/Vehicles_and_Transport_scooter_transport-512.png",
+  "stock": 100
+},{
+  "_id": {
+    "$oid": "63c7fc22e7f91ce0a62b51bd"
+  },
+  "title": "Dron",
+  "price": 4118,
+  "thumbnail": "https://cdn3.iconfinder.com/data/icons/font-awesome-solid/640/motorcycle-512.png",
+  "stock": 0
+},{
+  "_id": {
+    "$oid": "63c7fc22e7f91ce0a62b51be"
+  },
+  "title": "Lapiz",
+  "price": 4999,
+  "thumbnail": "https://cdn1.iconfinder.com/data/icons/vehicles-and-travel-1/32/Vehicles_and_Transport_scooter_transport-512.png",
+  "stock": 0
+},{
+  "_id": {
+    "$oid": "63c7fc41e7f91ce0a62b51bf"
+  },
+  "title": "Monitor",
+  "price": 2876,
+  "thumbnail": "url",
+  "stock": 100
+}]

@@ -1,0 +1,168 @@
+
+D:\BasesDatos>mongosh
+Current Mongosh Log ID: 63c7fc006838f321e7858bfb
+Connecting to:          mongodb://127.0.0.1:27017/?directConnection=true&serverSelectionTimeoutMS=2000&appName=mongosh+1.6.2
+Using MongoDB:          6.0.3
+Using Mongosh:          1.6.2
+
+For mongosh info see: https://docs.mongodb.com/mongodb-shell/
+
+------
+   The server generated these startup warnings when booting
+   2023-01-18T08:18:15.138-03:00: Access control is not enabled for the database. Read and write access to data and configuration is unrestricted
+   2023-01-18T08:18:15.140-03:00: This server is bound to localhost. Remote systems will be unable to connect to this server. Start the server with --bind_ip <address> to specify which IP addresses it should serve responses from, or with --bind_ip_all to bind to all interfaces. If this behavior is desired, start the server with --bind_ip 127.0.0.1 to disable this warning
+------
+
+------
+   Enable MongoDB's free cloud-based monitoring service, which will then receive and display
+   metrics about your deployment (disk utilization, CPU, operation statistics, etc).
+
+   The monitoring data will be available on a MongoDB website with a unique URL accessible to you
+   and anyone you share the URL with. MongoDB may use this information to make product
+   improvements and to suggest MongoDB products and deployment options to you.
+
+   To enable free monitoring, run the following command: db.enableFreeMonitoring()
+   To permanently disable this reminder, run the following command: db.disableFreeMonitoring()
+------
+
+test> use ecommerce
+switched to db ecommerce
+ecommerce> db.createCollection("mensajes")
+{ ok: 1 }
+ecommerce> db.createCollection("productos")
+{ ok: 1 }
+ecommerce> load("d:\\BasesDatos\\scriptsMongoDb\\addDocuments.js")
+true
+ecommerce> db.mensajes.estimatedDocumentCount()
+10
+ecommerce> db.productos.estimatedDocumentCount()
+10
+ecommerce> db.productos.insertOne({ title: "Monitor", price: 2876, thumbnail: "url"})
+{
+  acknowledged: true,
+  insertedId: ObjectId("63c7fc41e7f91ce0a62b51bf")
+}
+ecommerce> db.productos.find({"price": {$lt: 1000}})
+[
+  {
+    _id: ObjectId("63c7fc22e7f91ce0a62b51b5"),
+    title: 'Calculadora',
+    price: 120,
+    thumbnail: 'https://cdn4.iconfinder.com/data/icons/business-1221/24/Calculator-512.png'
+  },
+  {
+    _id: ObjectId("63c7fc22e7f91ce0a62b51b6"),
+    title: 'TV 50"',
+    price: 800,
+    thumbnail: 'https://cdn3.iconfinder.com/data/icons/google-material-design-icons/48/ic_tv_48px-256.png'
+  },
+  {
+    _id: ObjectId("63c7fc22e7f91ce0a62b51b7"),
+    title: 'Smartphone',
+    price: 980,
+    thumbnail: 'https://cdn4.iconfinder.com/data/icons/glyphs/24/icons_mobile-512.png'
+  }
+]
+ecommerce> db.productos.find({ $and: [{"price": {$gte: 1000}}, {"price": {$lte: 3000}}]})
+[
+  {
+    _id: ObjectId("63c7fc22e7f91ce0a62b51b8"),
+    title: 'Lavarropa',
+    price: 1203,
+    thumbnail: 'https://cdn2.iconfinder.com/data/icons/kitchen-appliances-computers-and-electronics/32/Appliances-16-512.png'
+  },
+  {
+    _id: ObjectId("63c7fc22e7f91ce0a62b51b9"),
+    title: 'Bicicleta',
+    price: 1544,
+    thumbnail: 'https://cdn4.iconfinder.com/data/icons/sports-outline-24-px/24/bycicle_cycling_speed_transport_sports-512.png'
+  },
+  {
+    _id: ObjectId("63c7fc22e7f91ce0a62b51ba"),
+    title: 'Router wifi',
+    price: 2675,
+    thumbnail: 'https://cdn1.iconfinder.com/data/icons/bootstrap-fill-vol-2/16/router-fill-512.png'
+  },
+  {
+    _id: ObjectId("63c7fc41e7f91ce0a62b51bf"),
+    title: 'Monitor',
+    price: 2876,
+    thumbnail: 'url'
+  }
+]
+ecommerce> db.productos.find({"price": {$gt: 3000}})
+[
+  {
+    _id: ObjectId("63c7fc22e7f91ce0a62b51bb"),
+    title: 'Motocicleta',
+    price: 3556,
+    thumbnail: 'https://cdn3.iconfinder.com/data/icons/font-awesome-solid/640/motorcycle-512.png'
+  },
+  {
+    _id: ObjectId("63c7fc22e7f91ce0a62b51bc"),
+    title: 'Monopatin',
+    price: 3927,
+    thumbnail: 'https://cdn1.iconfinder.com/data/icons/vehicles-and-travel-1/32/Vehicles_and_Transport_scooter_transport-512.png'
+  },
+  {
+    _id: ObjectId("63c7fc22e7f91ce0a62b51bd"),
+    title: 'Dron',
+    price: 4118,
+    thumbnail: 'https://cdn3.iconfinder.com/data/icons/font-awesome-solid/640/motorcycle-512.png'
+  },
+  {
+    _id: ObjectId("63c7fc22e7f91ce0a62b51be"),
+    title: 'Lapiz',
+    price: 4999,
+    thumbnail: 'https://cdn1.iconfinder.com/data/icons/vehicles-and-travel-1/32/Vehicles_and_Transport_scooter_transport-512.png'
+  }
+]
+ecommerce> db.productos.updateMany({}, {$set: {stock: 100}})
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 11,
+  modifiedCount: 11,
+  upsertedCount: 0
+}
+ecommerce> db.productos.updateMany({price: {$gt: 4000}, {$set: {stock: 0}})
+Uncaught:
+SyntaxError: Unexpected token (1:45)
+
+> 1 | db.productos.updateMany({price: {$gt: 4000}, {$set: {stock: 0}})
+    |                                              ^
+  2 |
+
+ecommerce> db.productos.updateMany({price: {$gt: 4000}}, {$set: {stock: 0}})
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 2,
+  modifiedCount: 2,
+  upsertedCount: 0
+}
+ecommerce> db.productos.deleteMany({price: {$lt: 1000}})
+{ acknowledged: true, deletedCount: 3 }
+ecommerce> db.createUser({user: "pepe", pdw: "asd456", roles:[{role: "read", db: "ecommerce"}]})
+MongoshInvalidInputError: [COMMON-10001] Missing required property: "pwd"
+ecommerce> db.createUser({user: "pepe", pwd: "asd456", roles:[{role: "read", db: "ecommerce"}]})
+{ ok: 1 }
+ecommerce> db.auth("pepe", "asd456")
+{ ok: 1 }
+ecommerce> db.productos.deleteMany({price: {$lt: 1000}})
+{ acknowledged: true, deletedCount: 0 }
+ecommerce> db.productos.deleteMany({price: {$lt: 2000}})
+{ acknowledged: true, deletedCount: 2 }
+ecommerce>
+
+
+
+
+
+
+
+
+
+
+
+
