@@ -1,4 +1,3 @@
-//const mongoose = require('mongoose')
 const connectToDd = require('../DB/config/connectToMongo')
 
 class Container {
@@ -19,19 +18,6 @@ class Container {
   }
  
 
-/*
-  async modifyById( id, item ) {  // probar
-    try {
-      await connectToDd()
-      await this.schema.findOneAndUpdate(
-        { _id: id },
-        { $set: {...item}})
-    } catch(err) {
-      console.log(`Error: ${err}`)
-      return false
-    }
-  }
-*/
 
   async getById( id ) {
     try {

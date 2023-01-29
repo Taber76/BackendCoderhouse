@@ -1,9 +1,8 @@
-const connectToDd = require('../../DB/config/connectToMongo')
-const Container = require('../../containers/containerMongoDb')
-const { productModel } = require('../../DB/model/mongoDbModel')
+const connectToDd = require('../../DB/config/connectToFirebase')
+const Container = require('../../containers/containerFirebase')
 
 class Product extends Container {
-
+/*
   async add( item ) {
     try{
       await connectToDd()
@@ -30,10 +29,10 @@ class Product extends Container {
     }
   }
 
-
+*/
 }
 
 
-const products = new Product( productModel )
+const products = new Product('products')
 
 module.exports = products
