@@ -2,6 +2,7 @@ const connectToDd = require('../../DB/config/connectToMongo')
 const Container = require('../../containers/containerMongoDb')
 const { productModel } = require('../../DB/model/mongoDbModel')
 
+
 class Product extends Container {
 
   async add( item ) {

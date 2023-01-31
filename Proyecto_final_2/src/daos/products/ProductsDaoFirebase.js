@@ -1,35 +1,44 @@
-const connectToDd = require('../../DB/config/connectToFirebase')
+const admin = require('firebase-admin')
 const Container = require('../../containers/containerFirebase')
 
+
 class Product extends Container {
-/*
-  async add( item ) {
+
+  async add( doc ) {
     try{
-      await connectToDd()
-      const newProduct = new productModel( item )
-      await newProduct.save()
-        .then(product => console.log(`Se ha agregado a la base de datos elemento con id: ${product._id}`))
-        .catch(err => console.log(err))
+      const db = admin.firestore()
+      const res = await db.collection(this.collection).add(doc)
+      console.log(`Se ha agregado a la base de datos elemento con id: ${res.id}`)
       return
     } catch(err) {
       console.log(`Error: ${err}`)
+      return
     }
   }
 
   
-  async modifyById( id, item ) {  
+  async modifyById( id, doc ) {  
     try {
-      await connectToDd()
-      await this.schema.findOneAndUpdate(
-        { _id: id },
-        { $set: {...item}})
+      const db = admin.firestore()
+      const ref = db.collection(this.collection).doc(id)
+      await ref.update(
+        { title: doc.title,
+          description: doc.description,
+          code: doc.code,
+          price: doc.price,
+          stock: doc.stock,
+          thumbnail: doc.thumbnail
+        }
+      )
+      console.log(`Se ha modificado el elemento con id: ${id}`)
+      return
     } catch(err) {
       console.log(`Error: ${err}`)
       return false
     }
   }
 
-*/
+
 }
 
 

@@ -9,8 +9,8 @@ const connectToDd = async () => {
       credential: admin.credential.cert(serviceAccount),
       databaseURL: 'https://hanovershop-df086.firebaseio.com'
     })
-    console.log('Connected to Firebase...')
-    return
+  console.log('Connected to Firebase...')
+  return
   }
 
   console.log("Conexion existente")

@@ -4,6 +4,7 @@ const productRouter = Router()
 
 const { products } = require('../daos/generalDaos')
 const user = require('../permissions/user')
+const useMongoDb = require('../permissions/dataBaseUse')
 
 
 
@@ -40,13 +41,19 @@ productRouter.put('/productos/:id', async (req, res) => {
   if (user.administrador){
     const id = req.params.id
     const productToModify = req.body
-    console.log(productToModify)
-    let allProducts = await products.getAll() 
-    const index = allProducts.findIndex( item => item.id === id )
+    let allProducts = await products.getAll()
+
+    let index
+
+    useMongoDb.useMongoDb ? 
+    index = allProducts.findIndex( item => item.id === id ) : //mongodb
+    index = allProducts.findIndex( item => item._id === id ) //firebase
+
     if ( index !== -1 ) {
       await products.modifyById( id, productToModify )
       res.send({ productToModify })
     } else {
+      console.log('no se encontro producto')
       res.status(404).send({ error: 'id no valido'})
     }
   } else {

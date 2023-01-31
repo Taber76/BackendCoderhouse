@@ -52,7 +52,6 @@ class Container {
     try {
       const product = await knex(this.config).select('title', 'price', 'thumbnail')
       .from(this.dbTable).where('id', id).first()
-      console.log(product)
       return product ? product : null
 
     } catch(err) {

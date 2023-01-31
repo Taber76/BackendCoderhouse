@@ -48,7 +48,6 @@ class Cart extends Container {
       const cart = await this.schema.find(
         { _id: id },
         { products: 1})
-      console.log(cart)
       return cart[0].products
     } catch(err) {
       console.log(`Error: ${err}`)

@@ -1,1 +1,1 @@
-module.exports = { useMongoDb: false }
+module.exports =  { useMongoDb: true }

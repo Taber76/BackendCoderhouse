@@ -1,16 +1,15 @@
-const connectToDd = require('../../DB/config/connectToFirebase')
+const admin = require('firebase-admin')
 const Container = require('../../containers/containerFirebase')
 
 
+
 class Cart extends Container {
-/*
-  async newCart( items ) {
+
+  async newCart( doc ) {
     try{
-      await connectToDd()
-      const newCart = new cartModel( items )
-      await newCart.save()
-        .then(cart => console.log(`Se ha agregado a la base de datos elemento con id: ${cart._id}`))
-        .catch(err => console.log(err))
+      const db = admin.firestore()
+      const res = await db.collection(this.collection).add(doc)
+      console.log(`Se ha agregado a la base de datos carrito con id: ${res.id}`)
       return
     } catch(err) {
       console.log(`Error: ${err}`)
@@ -19,10 +18,12 @@ class Cart extends Container {
 
   async addItem( id, item ) { //Agrega un producto al carrito indicado 
     try{
-      await connectToDd()
-      await this.schema.findOneAndUpdate(
-        { _id: id },
-        { $push: { products: item }})
+      const db = admin.firestore()
+      const docRef = db.collection(this.collection).doc(id)
+      docRef.get()
+        .then( doc => {
+          docRef.update({ products: [...doc.get('products'), item]})
+        })
       return
     } catch(err) {
       console.log(`Error: ${err}`)
@@ -31,10 +32,11 @@ class Cart extends Container {
 
   async deleteItem( id, item ) { 
     try{
-      await connectToDd()
-      await this.schema.findOneAndUpdate(
-        { _id: id },
-        { $pull: { products: item }})
+      const db = admin.firestore()
+      const docRef = db.collection(this.collection).doc(id)
+      docRef.update({
+        products: admin.firestore.FieldValue.arrayRemove(item)
+      })
       return
     } catch(err) {
       console.log(`Error: ${err}`)
@@ -43,18 +45,20 @@ class Cart extends Container {
 
   async getAllItems( id ) {  
     try{
-      await connectToDd()
-      const cart = await this.schema.find(
-        { _id: id },
-        { products: 1})
-      console.log(cart)
-      return cart[0].products
+      const db = admin.firestore()
+      const docRef = db.collection(this.collection).doc(id)
+      let array
+      await docRef.get()
+        .then( doc => {
+          array = doc.get('products')
+        })
+     return array
     } catch(err) {
       console.log(`Error: ${err}`)
     }
   }
 
-*/
+
 }
 
 

@@ -36,9 +36,9 @@ if (administrador) {
     const producto = {
         title: formulario[0].value,
         description: formulario[1].value,
-        code: formulario[2].value,
-        price: formulario[3].value,
-        stock: formulario[4].value,
+        code: Number(formulario[2].value),
+        price: Number(formulario[3].value),
+        stock: Number(formulario[4].value),
         thumbnail: formulario[5].value
     }
     if (validateProducto(producto)){
@@ -85,9 +85,9 @@ document.getElementById("idProdToModifyBtn").addEventListener("click", ev => {
         body: JSON.stringify({
           title: namem.value,
           description: descriptionm.value,
-          code: codem.value,
-          price: pricem.value,
-          stock: stockm.value,
+          code: Number(codem.value),
+          price: Number(pricem.value),
+          stock: Number(stockm.value),
           thumbnail: picturem.value
         }),
         headers: {

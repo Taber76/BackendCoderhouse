@@ -12,9 +12,9 @@ const create = async () => {
   const data = {
     "title": "TV 50",
     "description": "Smart Samsung",
-    "code": "394",
-    "price": "35000",
-    "stock": "12",
+    "code": 394,
+    "price": 35000,
+    "stock": 12,
     "thumbnail": "https://cdn3.iconfinder.com/data/icons/google-material-design-icons/48/ic_tv_48px-256.png",
 
   }

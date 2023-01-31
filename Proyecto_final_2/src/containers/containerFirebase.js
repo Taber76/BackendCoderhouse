@@ -1,10 +1,8 @@
 const admin = require('firebase-admin')
-const connectToDd = require('../DB/config/connectToFirebase')
 
 
-const getCollectionRef = async (collection) => {
+const getCollectionRef = (collection) => {
   try{
-    await connectToDd()
     const db = admin.firestore()
     return db.collection(collection)
   } catch(err) {
@@ -13,6 +11,15 @@ const getCollectionRef = async (collection) => {
 
 }
 
+const firebase2mongoDb = ( firebaseArray ) => { // convierte formato firebase a array mongodb
+  const mongodbArray = []
+  firebaseArray.forEach( ele => {
+    mongodbArray.push({_id: ele.id, ...ele.data()})
+  })
+  return mongodbArray
+}
+
+
 
 class Container {
 
@@ -20,29 +27,10 @@ class Container {
       this.collection = collection
   }
   
-  firebase2mongoDb( firebaseArray ) { // convierte formato firebase a array mongodb
-    const mongodbArray = []
-    firebaseArray.forEach( ele => {
-      mongodbArray.push({_id: ele.id, ...ele.data})
-    })
-    return mongodbArray
-  }
-/*
-  async getCollectionRef() {
-    try{
-      await connectToDd()
-      const db = admin.firestore()
-      return db.collection(this.collection)
-    } catch(err) {
-      console.log(`Error: ${err}`)
-    }
 
-  }
-*/
-  async getAll() { console.log('hola')
+  async getAll() {
     try{
-      const ref = await getCollectionRef(this.collection)
-      const allItems = ref.get()
+      const allItems = await getCollectionRef(this.collection).get()
       return firebase2mongoDb(allItems)
     } catch(err) {
       console.log(`Error: ${err}`)
@@ -52,12 +40,11 @@ class Container {
 
   async getById( id ) {
     try {
-      const itemRef = getCollectionRef().doc(id)
-      const item = await itemRef.get()
-      if (!item.exists) {
+      const doc = await getCollectionRef(this.collection).doc(id).get()
+      if (!doc.exists) {
         console.log('No existe esa id!')
       } else {
-        return firebase2mongoDb(item)
+        return [doc.data()]
       }
       return null
 
@@ -67,9 +54,9 @@ class Container {
   }
 
 
-  async deleteById( id ) {  
+  deleteById( id ) {  
     try {
-      await getCollectionRef().doc(id).delete()
+      getCollectionRef(this.collection).doc(id).delete()
       return 
     } catch(err) {
       console.log(`Error: ${err}`)
@@ -80,12 +67,9 @@ class Container {
 
   async deleteAll() {
     try {
-      getCollectionRef().get().then( query => {
+      getCollectionRef(this.collection).get().then( query => {
         query.forEach( doc => { doc.ref.delete()})
       })
-
-      await connectToDd()
-      await this.schema.deleteMany()
       return 
     } catch(err) {
       console.log(`Error: ${err}`)
