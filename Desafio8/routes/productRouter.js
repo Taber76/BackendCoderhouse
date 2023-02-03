@@ -1,5 +1,5 @@
 const express = require('express')
-const { products } = require('../class/containerMongoDb')
+const { products } = require('../class/productContainer')
 const { mock5 } = require('../class/mockFaker')
 
 const { Router } = express   

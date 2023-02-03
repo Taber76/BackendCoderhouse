@@ -9,7 +9,9 @@ const app = express()
 const httpServer = new HttpServer(app)
 const io = new Socket(httpServer)
 
-const { products, chats } = require('../class/containerMongoDb')
+const { products } = require('../class/productContainer')
+const { chats } = require('../class/chatContainer')
+
 
 
 //-------- middlewares
@@ -39,6 +41,7 @@ io.on('connection', async socket => {
   //----- nuevo mensaje desde el cliente
   socket.on('newMsj', async mensaje => {
       mensaje.date = new Date().toLocaleString()
+      mensajesMemory.push( mensaje )
       await chats.add( mensaje )
       io.sockets.emit('mensajes', await chats.getAll());
   })

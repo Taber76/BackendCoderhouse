@@ -9,4 +9,9 @@ const chat = new schema.Entity('chats', {
   message: [ message ],
 })
 
-const normalizedData = normalize( originalData, chat)
+
+const normalizedData = (data) => {
+  return normalize( data, chat)
+}
+
+module.export = normalizedData

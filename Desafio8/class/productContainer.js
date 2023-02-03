@@ -1,5 +1,5 @@
 const connectToDd = require('../DB/config/connectToMongo')
-const { productModel, chatModel } = require('../DB/model/mongoDbModel')
+const { productModel } = require('../DB/model/mongoDbModel')
 
 
 class Container {
@@ -73,7 +73,6 @@ class Container {
 }
 
 const products = new Container( productModel )
-const chats = new Container ( chatModel )
 
 
-module.exports = { products, chats } 
+module.exports = { products } 
