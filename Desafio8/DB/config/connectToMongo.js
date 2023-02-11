@@ -18,6 +18,5 @@ const connectToDd = async () => {
   return
 }
 
-
 module.exports = connectToDd 
 

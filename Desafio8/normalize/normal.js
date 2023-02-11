@@ -1,17 +1,21 @@
-import { normalize, schema } from 'normalizr'
+const { normalize, schema } = require('normalizr')
 
 
-const user = new schema.Entity('users')
-const message = new schema.Entity('messages')
+const messageSchema = new schema.Entity('messages')
 
-const chat = new schema.Entity('chats', {
-  user: [ user ],
-  message: [ message ],
+const userSchema = new schema.Entity('users',
+ {message: [messageSchema]},
+ {idAttribute: 'email'})
+
+const chatSchema = new schema.Entity('chats', {
+  user: [ userSchema ]
 })
 
 
+
 const normalizedData = (data) => {
-  return normalize( data, chat)
+  return normalize( data, chatSchema)
 }
 
-module.export = normalizedData
+
+module.exports = normalizedData 

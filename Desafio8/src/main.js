@@ -13,7 +13,6 @@ const { products } = require('../class/productContainer')
 const { chats } = require('../class/chatContainer')
 
 
-
 //-------- middlewares
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
@@ -36,14 +35,15 @@ io.on('connection', async socket => {
 
   
   //----- chat inicial al cliente
-  socket.emit('mensajes', await chats.getAll());
+  socket.emit('mensajes', await chats.getAll())
+
 
   //----- nuevo mensaje desde el cliente
   socket.on('newMsj', async mensaje => {
       mensaje.date = new Date().toLocaleString()
-      mensajesMemory.push( mensaje )
       await chats.add( mensaje )
-      io.sockets.emit('mensajes', await chats.getAll());
+      
+      //io.sockets.emit('mensajes', await chats.getAll())
   })
 
 })

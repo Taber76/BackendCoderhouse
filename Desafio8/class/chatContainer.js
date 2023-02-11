@@ -12,9 +12,15 @@ class Container {
   async getAll() {
     try{
       await connectToDd()
-      const messagesInDb = await this.schema.findOne ( { chatid: 'chat1'} )
-       // { projection: { messages: 1, _id: 0 }} )
-      return normalizedData( messagesInDb )
+      const chatInDb = await this.schema.findOne ( { chatid: 'chat1'} )
+   
+      console.log(JSON.stringify(chatInDb.chat, null, 2))
+      console.log('-----------------')
+      console.log( JSON.stringify(normalizedData(chatInDb.chat), null, 2) )
+
+
+      return chatInDb.messages
+      // return normalizedData( messagesInDb )
     } catch(err) {
       console.log(`Error: ${err}`)
     }
@@ -24,10 +30,26 @@ class Container {
   async add( message ) {
     try{
       await connectToDd()
-      const messagesInDb = await this.schema.findOne ( { chatid: 'chat1' } ,
-      { projection: { messages: 1, _id: 0 }} )
-      await this.schema.updateOne( { chatid: 'chat1' } ,
-      { $set: { messages: messagesInDb.push( message) }} )
+      console.log(message)
+      const chatInDb = await this.schema.findOne ( { chatid: 'chat1' } )
+      const newMsj = chatInDb.chat
+      newMsj.push({
+        user: { 
+          email: message.author.id,
+          name: message.author.name,
+          surmame: message.author.surname,
+          age: message.author.age,
+          nickname: message.author.nickname,
+          avatar: message.author.avatar,
+        },
+        message: {
+          timestamp: message.date,
+          text: message.text
+          } 
+      })
+      await this.schema.updateOne({ chatid: 'chat1' },
+        { $set: { chat: newMsj }}
+        )
       return
     } catch(err) {
       console.log(`Error: ${err}`)
@@ -40,4 +62,4 @@ class Container {
 const chats = new Container ( chatModel )
 
 
-module.exports = chats
+module.exports = { chats }
