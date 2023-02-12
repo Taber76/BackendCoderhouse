@@ -1,6 +1,6 @@
 const connectToDd = require('../DB/config/connectToMongo')
 const { chatModel } = require('../DB/model/mongoDbModel')
-const normalizedData = require('../normalize/normal')
+const { normalizedData, denormalizeData } = require('../normalize/normal')
 
 class Container {
 
@@ -14,13 +14,9 @@ class Container {
       await connectToDd()
       const chatInDb = await this.schema.findOne ( { chatid: 'chat1'} )
    
-      console.log(JSON.stringify(chatInDb.chat, null, 2))
-      console.log('-----------------')
-      console.log( JSON.stringify(normalizedData(chatInDb.chat), null, 2) )
-
-
-      return chatInDb.messages
-      // return normalizedData( messagesInDb )
+      return normalizedData(chatInDb.chat)
+ 
+     
     } catch(err) {
       console.log(`Error: ${err}`)
     }
@@ -30,7 +26,6 @@ class Container {
   async add( message ) {
     try{
       await connectToDd()
-      console.log(message)
       const chatInDb = await this.schema.findOne ( { chatid: 'chat1' } )
       const newMsj = chatInDb.chat
       newMsj.push({

@@ -43,7 +43,7 @@ io.on('connection', async socket => {
       mensaje.date = new Date().toLocaleString()
       await chats.add( mensaje )
       
-      //io.sockets.emit('mensajes', await chats.getAll())
+      io.sockets.emit('mensajes', await chats.getAll())
   })
 
 })

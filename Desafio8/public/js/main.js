@@ -1,4 +1,4 @@
-const socket = io.connect();
+const socket = io.connect()
 
 //-------------------------
 
@@ -14,8 +14,8 @@ function validateEmail(email) {
 
 
 
-//----------------------
-//--- TABLA DE PRODUCTOS
+//-------------------------------------------------------------------------------------------------
+//--- PRODUCTOS
 
 const formulario = document.getElementById('formulario')
 formulario.addEventListener('submit', e => {
@@ -58,8 +58,12 @@ socket.on('productos', data => {
 })
 
 
-//----------------------
+
+//----------------------------------------------------------------------------------------
 //--- CHAT
+
+
+//envio de mensajes-----------
 
 const userEmail = document.getElementById("userEmail")
 const userName = document.getElementById("userName")
@@ -94,20 +98,22 @@ document.getElementById("sendBtn").addEventListener("click", ev => {
 })
 
 
-
+// recepcion mensajes desde el backend
 socket.on('mensajes', data => {
+
+  const denormalized = denormalizeData (data)
   
-  let htmlChatToRender = ``
+  let htmlChatToRender = `<div class="user">Compresion de mensajes: ${denormalized.percent}%</div>`
   
-  data.forEach(( element ) => {
+  denormalized.data.forEach(( element ) => {
     htmlChatToRender = htmlChatToRender + `
     <div>
-      <div class="user">User: ${element.user} </div>
-      <div class="date">${element.date} </div>
-      <div class="mensaje">${element.message}</div>
+      <div class="user">User: ${element.user.email} </div>
+      <div class="date">${element.message.timestamp} </div>
+      <div class="mensaje">${element.message.text} </div>
+      <img src="${element.user.avatar}" alt="" width="30" height="30">
     </div>
     `
-    console.log(element)
   })
 
   document.querySelector('#chat').innerHTML = htmlChatToRender

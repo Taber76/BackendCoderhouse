@@ -1,21 +1,26 @@
-const { normalize, schema } = require('normalizr')
+const { normalize, schema, denormalize } = require('normalizr')
 
 
-const messageSchema = new schema.Entity('messages')
+const messageSchema = new schema.Entity('messages', {}, {idAttribute: 'timestamp'})
 
-const userSchema = new schema.Entity('users',
- {message: [messageSchema]},
- {idAttribute: 'email'})
+const userSchema = new schema.Entity('users', {}, {idAttribute: 'email'})
 
-const chatSchema = new schema.Entity('chats', {
-  user: [ userSchema ]
-})
-
+const chat = [
+  {
+    user: userSchema,
+    message: messageSchema
+  }
+]
 
 
 const normalizedData = (data) => {
-  return normalize( data, chatSchema)
+  return normalize( data, chat )
 }
 
 
-module.exports = normalizedData 
+const denormalizeData = (data) => {
+  return denormalize(data.result, chat, data.entities)
+}
+
+
+module.exports = { normalizedData, denormalizeData } 
