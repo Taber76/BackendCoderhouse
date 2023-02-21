@@ -9,7 +9,7 @@ if (useMongoDb.useMongoDb) {
   products = require('./products/ProductsDaoMongoDb')
   carts = require('./carts/CartsDaoMongoDb')
 } else {
- products = require('./products/ProductsDaoFirebase') //modificar tambien put producto
+ products = require('./products/ProductsDaoFirebase') 
  carts = require('./carts/CartsDaoFirebase')
  connectToDd()
 

@@ -6,19 +6,6 @@ const { Router } = express
 const productRouter = Router() 
 
 
-/*
-function sessionExpires(req, res, next) {
-  if ( req.cookies.connect.sid ) {
-    req.session.cookie.expires = new Date(Date.now() + 6000)
-    req.session.touch()
-    next()
-  } else {
-    res.redirect('/')
-  }
-}
-*/
-
-
 
 /* ------------------ router productos ----------------- */
 //------------- get productos
@@ -67,6 +54,7 @@ productRouter.delete('/productos/:id', async (req, res) => {
     res.status(404).send({ error: 'producto no encontrado'})
   }
 })
+
 
 
 //---------------- get Test
