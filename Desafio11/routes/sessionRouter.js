@@ -30,12 +30,11 @@ sessionRouter.post(
   }
 )
 
-//--------------------- post login user with google
+//--------------------- post login/register user with google
 sessionRouter.post(
   '/logingoogle', 
   passport.authenticate('googleauth'),
   function(req, res) {
-    console.log(body.token)
     res.status(200).send({ message: 'Autenticación exitosa.' })
   }
 )

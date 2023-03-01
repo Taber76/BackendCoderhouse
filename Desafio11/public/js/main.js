@@ -12,7 +12,6 @@ async function main(){
   const user = await userLogged() // Si hay usuario logeado devuelve el username
   
   if ( user ) {
-    console.log(10, user)
     logged( user ) // genero vistas de usaurio logueado
   
   } else {
@@ -26,7 +25,7 @@ async function main(){
         toast('Debe completar todos los datos', "#f75e25", "#ff4000")
       
       } else {    
-        fetch(`http://localhost:8080/session/login/`, {
+        fetch(`http://localhost:${location.port}/session/login/`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
@@ -55,44 +54,32 @@ async function main(){
       await authModule.signInWithPopup( authModule.auth, authModule.provider )
 
       authModule.onAuthStateChanged( authModule.auth, async user => {
-
-        if (user) {
-          //const token = await authModule.auth.currentUser.getIdToken()
-          console.log(user.accessToken)
-          fetch(`http://localhost:8080/session/logingoogle/`, {
+        if ( user ) {
+           fetch(`http://localhost:${location.port}/session/logingoogle/`, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-              profile: user.email,
-              accessToken: user.accessToken
+              username: user.email,
+              password: user.accessToken
             })
           })
           .then(response => {
             if( response.status === 401 ){
-              toast("Usuario y/o contrasena incorrectos", "#f75e25", "#ff4000")
+              toast("Fallo de autentificacion", "#f75e25", "#ff4000")
             } else {
-              logged ( logName.value )
+              logged ( user.email )
             }
           })
           .catch(error => {
             console.error('Se produjo un error: ', error)
           })
-      
-
-
-
         }
 
-
-
-
       })
-
       
-    })
-    
+    })  
 
   }
 }

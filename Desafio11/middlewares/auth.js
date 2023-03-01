@@ -1,6 +1,8 @@
 const passport = require('passport')
+const { Strategy } = require('passport-local')
 const LocalStrategy = require('passport-local').Strategy
-const GoogleStrategy = require('passport-google-oauth20').Strategy 
+
+const decodedToken = require('./googleauth')
 
 const { users } = require('../class/userContainer')
 
@@ -17,19 +19,22 @@ passport.use('login', new LocalStrategy(
 ))
 
 
-passport.use('googleauth', new GoogleStrategy({
-  clientID: 'CLIENT_ID',
-  clientSecret: 'CLIENT_SECRET',
-  callbackURL: 'hyyp://localhost:8080/session/logingoogle',
-  authorizationURL: 'https://accounts.google.com/o/oauth2/v2/auth',
-  tokenURL: 'https://oauth2.googleapis.com/token'
-},
-  async function ( accessToken, refreshToken, profile, done ) {
-    console.log('------------------------------------------',28)
-    console.log(accessToken)
-    return done( null, accessToken)
+
+passport.use('googleauth', new Strategy(
+  async function ( username, password, done ) {
+    const googleUser = await decodedToken( password )
+    const userInDb = await users.checkUser ( username, '' )
+    if ( userInDb.msg != 'No existe usuario' & googleUser.email === username ) { // usuario ya cargado en base de datos       
+      return done ( null, { username: username })
+    } 
+    if ( userInDb.msg === 'No existe usuario' & googleUser.email === username ) {
+      await users.addUser (username, password)
+      return done ( null, { username: username })
+    }
+    return done( null, false)
   }
 ))
+
 
 
 passport.use('register', new LocalStrategy(
