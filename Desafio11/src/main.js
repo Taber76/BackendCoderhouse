@@ -1,31 +1,25 @@
 /* Consigna: 
 
-const parseArgs = require('minimist')(process.argv.slice(2))
-const config = {
-  port: parseArgs.p
-}
-
-require('dotenv').config()
 */
 
 const { config, staticFiles } = require('../config/environment')
 
-
 const express = require('express')
 const expressSession = require('express-session')
-const MongoStore = require('connect-mongo')
-const advancedOptions = { useNewUrlParser: true, useUnifiedTopology: true }
-
 const { Server: HttpServer } = require('http')
 const { Server: Socket } = require('socket.io')
+const app = express()
+const httpServer = new HttpServer(app)
+const io = new Socket(httpServer)
+
 
 const productRouter = require('../routes/productRouter')
 const sessionRouter = require('../routes/sessionRouter')
 const infoRouter = require('../routes/infoRouter')
 
-const app = express()
-const httpServer = new HttpServer(app)
-const io = new Socket(httpServer)
+
+const MongoStore = require('connect-mongo')
+const advancedOptions = { useNewUrlParser: true, useUnifiedTopology: true }
 
 const { products } = require('../class/productContainer')
 const { chats } = require('../class/chatContainer')

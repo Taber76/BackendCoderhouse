@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/Taber76/BackendCoderhouse/issues"
   },
-  "homepage": "https://github.com/Taber76/BackendCoderhouse#readme"
+  "homepage": "https://github.com/Taber76/BackendCoderhouse#readme",
+  "dependencies": {
+    "pm2": "^5.2.2"
+  }
 }
