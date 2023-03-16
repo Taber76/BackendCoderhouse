@@ -3,7 +3,7 @@ const { Strategy } = require('passport-local')
 const LocalStrategy = require('passport-local').Strategy
 
 const decodedToken = require('./googleauth')
-const logger = require('../log/logger')
+const { logger, loggererr } = require('../log/logger')
 
 const { users } = require('../class/userContainer')
 

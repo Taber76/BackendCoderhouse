@@ -6,7 +6,7 @@ const infoRouter = Router()
 const parseArgs = require('minimist')(process.argv)
 
 const numCPUs = require('os').cpus().length
-const logger = require('../log/logger')
+const { logger, loggererr } = require('../log/logger')
 //const frase = 'hola lola'.repeat(1000)
 
 infoRouter.get('/', async (req, res) => {

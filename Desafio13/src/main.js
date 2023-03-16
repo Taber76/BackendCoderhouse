@@ -33,7 +33,7 @@ const { config, staticFiles } = require('../config/environment')
 const express = require('express')
 
 //const compression = require('compression')
-const logger = require('../log/logger')
+const { logger, loggererr } = require('../log/logger')
 
 //--- Para servidor FORK & CLUSTER
 const cluster = require('cluster')
@@ -143,7 +143,7 @@ const baseProcces = () => {
   const server = httpServer.listen(PORT, () => {
     console.log(`Servidor http escuchando en el puerto ${server.address().port}`)
   })
-  server.on('error', error => logger.error(`Error en servidor ${error}`))
+  server.on('error', error => loggererr.error(`Error en servidor ${error}`))
   
 }
 //------------------------------ PROCESO BASE FIN -----------------------------------  

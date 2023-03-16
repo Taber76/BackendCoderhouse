@@ -1,25 +1,8 @@
-[2023-03-10T09:30:27.006] [WARN] default - Ruta: /casa, metodo: GET no implemantada
-[2023-03-10T09:31:10.129] [WARN] default - Ruta: /api/, metodo: GET no implemantada
-[2023-03-10T09:42:47.220] [ERROR] default - Producto id: 1 no encontrado
-[2023-03-10T09:43:10.204] [ERROR] default - Producto id: 123 no encontrado
-[2023-03-10T09:44:11.227] [ERROR] default - Producto id: 43 no encontrado
-[2023-03-10T10:10:22.553] [ERROR] default - Producto id: 43 no encontrado
-[2023-03-10T10:10:49.238] [ERROR] default - Producto id: 4353453 no encontrado
-[2023-03-10T10:13:20.962] [WARN] default - Ruta: /ap, metodo: GET no implemantada
-[2023-03-10T10:13:23.535] [WARN] default - Ruta: /ap, metodo: GET no implemantada
-[2023-03-10T10:29:12.357] [ERROR] default - Producto id: 4353453 no encontrado
-[2023-03-10T10:31:17.788] [ERROR] default - Producto id: 4353453 no encontrado
-[2023-03-10T10:31:57.820] [WARN] default - Ruta: /ap, metodo: GET no implemantada
-[2023-03-10T10:33:23.922] [WARN] default - Ruta: /info/a, metodo: GET no implemantada
-[2023-03-10T10:41:14.513] [WARN] default - Ruta: /info/2, metodo: GET no implemantada
-[2023-03-10T10:44:53.339] [ERROR] default - Producto id: 15 no encontrado
-[2023-03-10T10:45:04.248] [WARN] default - Ruta: /api/producto/15, metodo: GET no implemantada
-[2023-03-10T10:51:13.654] [WARN] default - Ruta: /api/producto/15, metodo: GET no implemantada
-[2023-03-10T10:51:19.942] [WARN] default - No hay usuario logeado
-[2023-03-10T11:08:25.605] [WARN] default - No hay usuario logeado
-[2023-03-10T11:08:44.055] [WARN] default - No hay usuario logeado
-[2023-03-10T11:08:52.337] [WARN] default - No hay usuario logeado
-[2023-03-10T11:09:31.582] [WARN] default - No hay usuario logeado
-[2023-03-10T11:21:31.068] [WARN] default - No hay usuario logeado
-[2023-03-10T11:21:46.026] [WARN] default - No hay usuario logeado
-[2023-03-10T11:30:14.333] [WARN] default - No hay usuario logeado
+[2023-03-16T07:32:19.655] [WARN] default - Ruta: /api/carrito/, metodo: GET no implemantada
+[2023-03-16T07:33:12.458] [WARN] default - Ruta: /favicon.ico, metodo: GET no implemantada
+[2023-03-16T07:33:50.718] [WARN] default - Ruta: /api/carrito/, metodo: GET no implemantada
+[2023-03-16T07:34:46.516] [WARN] default - Ruta: /favicon.ico, metodo: GET no implemantada
+[2023-03-16T07:34:49.330] [WARN] default - No hay usuario logeado
+[2023-03-16T07:34:49.355] [WARN] default - Ruta: /favicon.ico, metodo: GET no implemantada
+[2023-03-16T07:34:55.416] [WARN] default - No hay usuario logeado
+[2023-03-16T07:34:55.438] [WARN] default - Ruta: /favicon.ico, metodo: GET no implemantada

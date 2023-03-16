@@ -5,7 +5,7 @@ require('../middlewares/auth')
 const { Router } = express   
 const sessionRouter = Router() 
 
-const logger = require('../log/logger')
+const { logger, loggererr } = require('../log/logger')
 
 
 /* ------------------ router session ----------------- */
@@ -60,7 +60,7 @@ sessionRouter.post(
 sessionRouter.post('/logout', async (req, res) => {
   req.session.destroy((err) => {
     if (err) {
-      logger.error(`No se ha podido cerrar la sesion, error: ${error}`)
+      loggererr.error(`No se ha podido cerrar la sesion, error: ${error}`)
       res.status(500).send(`Something terrible just happened!!!`)
     } else {
       logger.info(`Sesion cerrada.`)

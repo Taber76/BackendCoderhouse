@@ -6,7 +6,7 @@ const { fork } = require('child_process')
 const { Router } = express   
 const productRouter = Router() 
 
-const logger = require('../log/logger')
+const { logger, loggererr } = require('../log/logger')
 
 /* ------------------ router productos ----------------- */
 //------------- get productos
@@ -25,7 +25,7 @@ productRouter.get('/productos/:id', async (req, res) => {
     logger.info(`Ruta: /api${req.url}, metodo: ${req.method}`)
     res.json( product )
   } else {
-    logger.error(`Producto id: ${id} no encontrado`) 
+    loggererr.error(`Producto id: ${id} no encontrado`) 
     res.status(404).send({ error: 'producto no encontrado'})
   }
 })
@@ -51,7 +51,7 @@ productRouter.put('/productos/:id', async (req, res) => {
     logger.info(`Ruta: /api${req.url}, metodo: ${req.method}`)
     res.send({ message: 'producto modificado'})
   } else {
-    logger.error(`Producto id: ${id} no encontrado`) 
+    loggererr.error(`Producto id: ${id} no encontrado`) 
     res.status(404).send({ error: 'producto no encontrado'})
   }
 })
@@ -64,7 +64,7 @@ productRouter.delete('/productos/:id', async (req, res) => {
     logger.info(`Ruta: /api${req.url}, metodo: ${req.method}`)
     res.send({ message: 'producto borrado'})
   } else {
-    logger.error(`Producto id: ${id} no encontrado`) 
+    loggererr.error(`Producto id: ${id} no encontrado`) 
     res.status(404).send({ error: 'producto no encontrado'})
   }
 }) 

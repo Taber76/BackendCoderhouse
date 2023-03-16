@@ -11,12 +11,18 @@ log4js.configure({
   }, 
   categories: {
     default: {
-      appenders: ['consoleLogger', 'warnFileLogger', 'errorFileLogger'],
+      appenders: ['consoleLogger', 'warnFileLogger'],
       level: 'all'
+    },
+    error: {
+      appenders: ['consoleLogger', 'errorFileLogger'],
+      level: 'error'
     }
   }
 })
 
 const logger = log4js.getLogger()
+const loggererr = log4js.getLogger('error') 
 
-module.exports = logger
+
+module.exports = { logger, loggererr }
