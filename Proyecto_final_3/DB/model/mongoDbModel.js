@@ -26,7 +26,8 @@ const userSchema = new Schema({
   address: { type: String, required: true },
   age: { type: Number, required: true },
   phone: { type: String, required: true },
-  photo: { type: String, required: true }
+  photo: { type: String, required: true },
+  cart: { type: Array, required: true } // el array se almacenara con el siguiente formato [ idProd1, cantProd1, idProd2, cantProd2, .... ]
 })
 
 

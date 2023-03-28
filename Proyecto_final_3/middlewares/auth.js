@@ -8,8 +8,8 @@ const { users } = require('../class/userContainer')
 
 
 passport.use('login', new LocalStrategy(
-  async function( username, password, done ) {
-    const validateUser = await users.checkUser (username, password)
+  async ( username, password, done ) => {
+    const validateUser = await users.checkUser( username, password )
     if ( validateUser.result ) {     
       return done( null, { username: username } )
     } else {
@@ -20,9 +20,8 @@ passport.use('login', new LocalStrategy(
 ))
 
 
-
 passport.use('register', new LocalStrategy(
-  async function( username, password, done ) {
+  async ( username, password, done ) => {
     if ( await users.userInDb (username) ) {
       logger.info(`Se intento registrar un usuario ya existente`)
       return done( null, false )   

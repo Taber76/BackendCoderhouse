@@ -66,16 +66,20 @@ function loginTemplate () {
   `
 }
 
-function logOkTemplate ( user ) {
+function logOkTemplate ( userData ) {
   return `
-  <div class="container alert alert-primary text-center" role="alert">
-    <div class="row">
-      <div class="col-9 mb-3">      
-        <h2>Bienvenido ${user}!!</h2>
-      </div>
-      <div class="col-3">
-        <button id="logoutBtn" type="" class="btn btn-secondary">LOGOUT</button> 
-      </div>
+  <div class="container alert alert-primary text-center">
+    <div class="row justify-content-between">
+      <div class="col-1">FOTO</div>
+      <div class="col">Bienvenido ${userData.username}</div>
+      <div class="col-2"><button id="logoutBtn" type="" class="btn btn-secondary">LOGOUT</button></div>
+    </div>
+    <div class="row justify-content-between">
+      <div class="col">Nombre: ${userData.name}</div>
+      <div class="col">Edad: ${userData.age}</div>
+      <div class="col">Direccion ${userData.address}</div>
+      <div class="col">Telefono ${userData.phone}</div>
+      <div class="col-2"><button id="cartBtn" type="" class="btn btn-success"> CART </button></div>
     </div>
   </div>
   `
@@ -96,100 +100,92 @@ function logByeTemplate ( user ) {
 
 // Productos
 
-function newProductTemplate(){
-  return `
-    <div class="container">
-    <div class="alert alert-primary text-center" role="alert">
-      INGRESO DE NUEVO PRODUCTO
-    </div>
-  </div>
-
-<form id= "formulario" class="container" action="/api/productos" method="POST" >
-   <div class="mb-3">
-     <label for="name" class="form-label">Nombre del producto</label>
-     <input type="text" class="form-control" id="name" name="title">
-   </div>
-   <div class="mb-3">
-    <label for="description" class="form-label">Descripcion</label>
-    <input type="text" class="form-control" id="description" name="description">
-  </div>
-
-  <div class="row d-flex justify-content-center">
-    <div class="mb-3 col">
-      <label for="code" class="form-label">Codigo</label>
-      <input type="number" class="form-control" id="code" name="code">
-    </div>
-    <div class="mb-3 col">
-      <label for="price" class="form-label">Precio</label>
-      <input type="number" class="form-control" id="price" name="price">
-    </div>
-    <div class="mb-3 col">
-      <label for="stock" class="form-label">Stock</label>
-      <input type="number" class="form-control" id="stock" name="stock">
-    </div>
-  </div>
-
-   <div class="mb-3">
-     <label for="picture" class="form-label">Foto del producto</label>
-     <input type="text" class="form-control" id="picture" name="thumbnail" aria-describedby="pictureHelp">
-     <div id="pictureHelp" class="form-text">URL de la foto</div>
-   </div>
-   <button type="submit" class="btn btn-primary">Guardar</button>
- </form>
-  `
-}
-
-
-
 function productsTable( products ) {
 
   let htmlToRender = `
-  <table class="table container">
-    <thead>
-      <tr>
-        <th scope="col">Nombre</th>
-        <th scope="col">Precio</th>
-        <th scope="col">Foto</th>
-      </tr>
-    </thead>
-    </tbody>`
+  <div class="container alert alert-primary text-center">
+    <div class="row">`
   
   products.forEach(( element ) => {
     htmlToRender = htmlToRender + `
-    <tr>
-      <td>${element.title}</td>
-      <td>${element.price}</td>
-      <td><img src=${element.thumbnail} style="max-width: 50px; height: auto;"</td>
-    </tr>` 
+    <div class="col p-1">
+      <div class="card" style="width: 16rem;">
+        <img src="${element.thumbnail}" class="card-img-top" alt="${element.title} style="width: 14rem; heigth: 14rem"" >
+        <div class="card-body">
+          <h5 class="card-title">${element.title} precio ${element.price}</h5>
+          <p class="card-text">${element.description}</p>
+          <button id="${element._id}" class="btn btn-primary">Agregar al carrito</button>
+        </div>
+      </div>
+    </div>
+    ` 
   })
   
-  htmlToRender = htmlToRender + '</tbody></table>'
+  htmlToRender = htmlToRender + '</div></div>'
   
   return htmlToRender
 }
 
 
-// Chat
+// Cart
+function cartViewTemplate( userCart, productsData ) {
+ 
+  let total = 0
+  let htmlToRender = `
+  <div class="container">
+    <div class="row">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th scope="col"></th>
+            <th scope="col">Articulo</th>
+            <th scope="col">Cantidad</th>
+            <th scope="col">Valor</th>
+            <th scope="col">Total</th>
+          </tr>
+        </thead>
+        <tbody>
+  `
 
-function chatMessages ( data ) {
+  userCart.forEach( element => {
+    const article = productsData.find( ele => ele._id === element.id )
 
-  const denormalized = denormalizeData (data)
-  
-  let htmlChatToRender = `<div class="user">Compresion de mensajes: ${denormalized.percent}%</div>`
-  
-  denormalized.data.forEach(( element ) => {
-    htmlChatToRender = htmlChatToRender + `
-    <div>
-      <div class="user">User: ${element.user.email} </div>
-      <div class="date">${element.message.timestamp} </div>
-      <div class="mensaje">${element.message.text} </div>
-      <img src="${element.user.avatar}" alt="" width="30" height="30">
-    </div>
+    htmlToRender = htmlToRender += `
+      <tr>
+        <td><img src="${article.thumbnail}" width="100" height="100"></td>
+        <td>${article.title}</td>
+        <td>${element.cant}</td>
+        <td>$${article.price}</td>
+        <td>$${article.price * element.cant}</td>
+      </tr>
     `
+    total =+ total + article.price * element.cant 
   })
 
-  return htmlChatToRender
+  htmlToRender = htmlToRender += `
+    <tr>
+      <td></td>
+      <td></td>
+      <td></td>
+      <th>TOTAL</th>
+      <th>$${total}</th>
+    </tr>
+  </tbody></table></div>
+  <div class="row">
+    <div class="col">
+      <button id="buyBtn" type="" class="btn btn-primary">REALIZAR COMPRA</button> 
+    </div>
+    <div class="col">
+      <button id="homeBtn" type="" class="btn btn-primary">VOLVER A LA TIENDA</button> 
+    </div>
+  </div> 
+  `
+
+  return htmlToRender
+
 }
+
+
 
 
 // register user

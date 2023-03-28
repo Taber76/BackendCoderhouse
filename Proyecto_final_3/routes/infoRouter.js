@@ -7,7 +7,7 @@ const parseArgs = require('minimist')(process.argv)
 
 const numCPUs = require('os').cpus().length
 const { logger, loggererr } = require('../log/logger')
-//const frase = 'hola lola'.repeat(1000)
+
 
 infoRouter.get('/', async (req, res) => {
  
@@ -22,10 +22,8 @@ infoRouter.get('/', async (req, res) => {
   tabla += `<tr><td>Path de ejecucion</td><td>${parseArgs._[2]}</td></tr>`
   tabla += `<tr><td>Carpeta del proyecto</td><td>${parseArgs._[1]}</td></tr>`
   tabla += '</table>'
-  //tabla += frase
-
+ 
   logger.info(`Ruta: /info, metodo: ${req.method}`)
-  console.log(tabla) // desafio13
 
   res.send(tabla)
 })

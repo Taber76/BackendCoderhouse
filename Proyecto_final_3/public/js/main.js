@@ -2,19 +2,16 @@ const sessionUserHtmlElement = document.querySelector('#sessionUser')
 const productListHtmlElement = document.querySelector('#productList')
 const registerFormHtmlElement = document.querySelector('#registerForm')
 
-// SOCKET ----------------------------------------------------------------------------------------
-
-const socket = io.connect()
-
 
 //-------------------------------------------------------------------------------------------------
 //--- SESSION
 async function main(){
-  const user = await userLogged() // Si hay usuario logeado devuelve el username --> session.js
+  const userData = await userLogged() // Si hay usuario logeado devuelve el username --> session.js
   
-  if ( user ) {
-    logged( user ) // genero vistas de usaurio logueado --> session.js
-  
+  if ( Object.keys(userData).length != 0 ) {
+    const productsData = await allProducts()
+    logged( userData[0], productsData ) // genero vistas de usaurio logueado --> session.js
+    
   } else {
     sessionUserHtmlElement.innerHTML = loginTemplate()
     const logUser = document.getElementById("logUser")
@@ -32,17 +29,20 @@ async function main(){
             'Content-Type': 'application/json'
           },
           body: JSON.stringify({
-            user: logUser.value,
+            username: logUser.value,
             password: logPassword.value
           })
         })
-        .then(response => {
-          if( response.status === 401 ){
-            toast("Usuario y/o contrasena incorrectos", "#f75e25", "#ff4000")
+        .then((response) => response.json())
+        .then(async (data) => {
+          if ( Object.keys(data).length === 0){
+            toast("Error de autenticacion", "#f75e25", "#ff4000")
           } else {
-            logged ( logUser.value )
+            const productsData = await allProducts()
+            logged ( data[0], productsData ) // <-- session.js
           }
-        })
+        }) 
+         
         .catch(error => {
           console.error('Se produjo un error: ', error)
         })
@@ -56,15 +56,6 @@ async function main(){
 
   }
 }
-
-
-//-------------------------------------------------------------------------------------------------
-//--- PRODUCTOS
-
-socket.on('productos', data => {
-    document.querySelector('#tabla').innerHTML = productsTable( data )
-})
-
 
 
 //-----------------------------------------------------------------

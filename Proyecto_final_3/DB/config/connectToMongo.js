@@ -1,4 +1,5 @@
 const mongoose = require('mongoose')
+const { logger, loggererr } = require('../../log/logger')
 
 let isConected
 
@@ -9,12 +10,12 @@ const connectToDd = async () => {
     { useNewUrlParser: true, useUnifiedTopology: true })
         .then(() => {
           isConected = true
-          console.log('MongoDB Connected...')})
+          logger.info('MongoDB Connected...')})
         .catch(err => console.log(err))   
     return
   }
 
-  console.log("Conexion existente")
+  logger.info("Conexion existente a MongoDB")
   return
 }
 

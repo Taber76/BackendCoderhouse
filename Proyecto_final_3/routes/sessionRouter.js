@@ -7,30 +7,43 @@ const sessionRouter = Router()
 
 const { users } = require('../class/userContainer')
 const { logger, loggererr } = require('../log/logger')
+const { sendEmail } = require('../messages/email')
 
 
 /* ------------------ router session ----------------- */
 //--------------------- usuario logeado?
-sessionRouter.get('/', (req, res) => {
-  if (req.session.passport) {
-    //req.session.cookie._expires = new Date(Date.now() + 60000)
-    //req.session.save()
-    logger.info(`Usuario ${req.session.passport.user} logeado`)
-    res.status(200).send({ user: req.session.passport.user })
-  } else {
-    logger.warn(`No hay usuario logeado`) 
-    res.status(401).send({ user: '' })
+sessionRouter.get(
+  '/',
+  async (req, res) => {
+    if (req.session.passport) {
+      const userData = await users.getUser( req.session.passport.user )
+      if (userData) {
+        logger.info(`Usuario ${req.session.passport.user} logeado`)
+        res.status(200).send(userData)
+      } else {
+        res.status(401).send({})
+      }  
+    } else {
+      logger.info(`No hay usuario logeado`) 
+      res.status(401).send({})
+    }
   }
-})
+)
 
 
 //--------------------- post login user
 sessionRouter.post(
   '/login', 
   passport.authenticate('login'),
-  function(req, res) {
-    logger.info(`Autenticacion exitosa`)
-    res.status(200).send({ message: 'Autenticación exitosa.' })
+  async (req, res) => {
+    const userData = await users.getUser( req.session.passport.user )
+    if (userData) {
+      logger.info(`Usuario ${req.session.passport.user} logeado`)
+      res.status(200).send(userData)
+    } else {
+      logger.warn(`No se pudieron recuperar los datos de ${req.session.passport.user} de la base de datos`)
+      res.status(401).send({})
+    }
   }
 )
 
@@ -49,11 +62,46 @@ sessionRouter.post(
       age: req.body.age,
       phone: req.body.phone,
       photo: req.body.photo
-    })){
+    })) {
       logger.info(`Usuario creado correctamente`)
+      sendEmail({
+        from: 'Administrador',
+        to: process.env.ADMINMAIL,
+        subject: 'Nuevo usuario registrado',
+        text: '',
+        html: `
+        <table>
+          <tbody>
+            <tr>
+              <td>Username</td>
+              <td>${req.body.username}</td>
+            </tr>
+            <tr>
+              <td>Name</td>
+              <td>${req.body.name}</td>
+            </tr>
+            <tr>
+              <td>Address</td>
+              <td>${req.body.address}</td>
+            </tr>
+            <tr>
+              <td>Age</td>
+              <td>${req.body.age}</td>
+            </tr>
+            <tr>
+              <td>Phone</td>
+              <td>${req.body.phone}</td>
+            </tr>
+            <tr>
+              <td>Photo</td>
+              <td>${req.body.photo}</td>
+            </tr>
+          </tbody>
+        </table>`
+      })
       res.status(200).send({ rlt: true, msg: 'Usuario creado correctamente'})
     } else {
-      logger.warn(`No se ha podidi crear usuario`)
+      logger.warn(`No se ha podido crear usuario`)
       res.status(401).send({ rlt: false, msg: 'Usuario no creado'})
     }
     
@@ -62,17 +110,20 @@ sessionRouter.post(
 
 
 //------------ get cerrar sesion
-sessionRouter.post('/logout', async (req, res) => {
-  req.session.destroy((err) => {
-    if (err) {
-      loggererr.error(`No se ha podido cerrar la sesion, error: ${error}`)
-      res.status(500).send(`Something terrible just happened!!!`)
-    } else {
-      logger.info(`Sesion cerrada.`)
-      res.redirect('/')
-    }
-  })
-})
+sessionRouter.post(
+  '/logout',
+  async (req, res) => {
+    req.session.destroy((err) => {
+      if (err) {
+        loggererr.error(`No se ha podido cerrar la sesion, error: ${error}`)
+        res.status(500).send(`Something terrible just happened!!!`)
+      } else {
+        logger.info(`Sesion cerrada.`)
+        res.redirect('/')
+      }
+    })
+  }
+)
 
 
 module.exports = sessionRouter

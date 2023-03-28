@@ -20,7 +20,6 @@ function registerNewUser(sessionUserHtmlElement) {
   document.getElementById("registerBtn").addEventListener("click", ev => {
 
     const phoneNumber = phoneInput.getNumber() // paso a fromato internacional
-    console.log(phoneNumber)
 
     if( !validateObject ({
           name: name.value,

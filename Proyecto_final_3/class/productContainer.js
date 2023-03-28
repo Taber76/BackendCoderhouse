@@ -1,6 +1,7 @@
 const connectToDd = require('../DB/config/connectToMongo')
 const { productModel } = require('../DB/model/mongoDbModel')
 
+const { logger, loggererr } = require('../log/logger')
 
 class Container { // MongoDB
 
@@ -15,7 +16,7 @@ class Container { // MongoDB
       const documentsInDb = await this.schema.find()
       return documentsInDb
     } catch(err) {
-      console.log(`Error: ${err}`)
+      loggererr.error(`Error: ${err} al intentar recuperar los productos de la base de datos`)
     }
   }
  
@@ -26,9 +27,8 @@ class Container { // MongoDB
       await connectToDd()
       const documentInDb = await this.schema.find({_id: id})
       return documentInDb ? documentInDb : null
-
     } catch(err) {
-      console.log(`Error: ${err}`)
+      loggererr.error(`Error: ${err} al intentar recuperar el producto id:${id} de la base de datos`)
     }
   }
 
@@ -39,7 +39,7 @@ class Container { // MongoDB
       await this.schema.deleteOne({ _id: id })
       return 
     } catch(err) {
-      console.log(`Error: ${err}`)
+      loggererr.error(`Error: ${err} al intentar borrar el producto id:${id} en la base de datos`)
       return false
     }
   }
@@ -51,7 +51,7 @@ class Container { // MongoDB
       await this.schema.deleteMany()
       return 
     } catch(err) {
-      console.log(`Error: ${err}`)
+      loggererr.error(`Error: ${err} al intentar borrar todos los productos de la base de datos`)
       return false
     }
   }
@@ -62,11 +62,11 @@ class Container { // MongoDB
       await connectToDd()
       const newProduct = new productModel( item )
       await newProduct.save()
-        .then(product => console.log(`Se ha agregado a la base de datos elemento con id: ${product._id}`))
-        .catch(err => console.log(err))
+        .then(product => logger.info(`Se ha agregado a la base de datos elemento con id: ${product._id}`))
+        .catch(err => loggererr.error(`Error: ${err} al intentar guardar el producto id: ${product._id} en la base de datos`))
       return
     } catch(err) {
-      console.log(`Error: ${err}`)
+      loggererr.error(`Error: ${err} al intentar guardar el producto id: ${product._id} en la base de datos`)
     }
   }
 
