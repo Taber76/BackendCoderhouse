@@ -8,6 +8,8 @@ const productRouter = Router()
 
 const { logger, loggererr } = require('../log/logger')
 const { sendEmail } = require('../messages/email')
+const { sendSMS } = require('../messages/sms')
+const { sendWa } = require('../messages/whatsapp')
 const { generateTable } = require('../api/jsonToHtml')
 
 
@@ -45,8 +47,8 @@ productRouter.get(
   '/carrito/:username',
   async (req, res) => {
     const username = req.params.username
-    const cart = await users.getAllCartProducts( username )
-    res.status(200).send({ cart: cart })
+    const userData = await users.getUser( username )
+    res.status(200).send({ cart: userData })
   }
 )
 
@@ -66,11 +68,11 @@ productRouter.get(
   '/carrito/compra/:username',
   async (req, res) => {
     const username = req.params.username
-    const cart = await users.getAllCartProducts( username )
+    const userData = await users.getUser( username )
     const productList = []
     //await delCart( username )
-
-    for ( const element of cart[0].cart ) {
+   
+    for ( const element of userData[0].cart ) {
       const item = await products.getById( element.id )
       productList.push({ 
         title: item[0].title,
@@ -88,11 +90,17 @@ productRouter.get(
     })
 
     //enviar mail a admin asunto nuevo pedido de nombre email + whatsapp con mismo asunto
+    sendWa({
+      body: `Nuevo pedido de ${username}`,
+      to: userData[0].phone
+    })
 
-    //mensaje de texto al usuario "pedido recibido y en proceso"
-
+    sendSMS({
+      body: 'Pedido recibido y en proceso',
+      number: userData[0].phone
+    })
     
-    res.status(200).send({ cart: cart })
+    res.status(200).send({ cart: userData })
   }
 )
 

@@ -14,8 +14,6 @@ const connectToDd = async () => {
         .catch(err => console.log(err))   
     return
   }
-
-  logger.info("Conexion existente a MongoDB")
   return
 }
 

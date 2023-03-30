@@ -29,13 +29,11 @@ const baseProcces = () => {
     cluster.fork()
   })
 
-
   //--- Servicios Express
   const expressSession = require('express-session')
   const { Server: HttpServer } = require('http')
    const app = express()
   const httpServer = new HttpServer(app)
-
 
   //--- Routes
   const productRouter = require('../routes/productRouter')
@@ -46,8 +44,7 @@ const baseProcces = () => {
   const MongoStore = require('connect-mongo')
   const advancedOptions = { useNewUrlParser: true, useUnifiedTopology: true }
 
- 
-  //--- Middlewares
+   //--- Middlewares
   app.use(express.json())
   app.use(express.urlencoded({ extended: true }))
   app.use(express.static(staticFiles))

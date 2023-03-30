@@ -9,6 +9,19 @@ const { users } = require('../class/userContainer')
 const { logger, loggererr } = require('../log/logger')
 const { sendEmail } = require('../messages/email')
 
+const multer = require('multer')
+const storage = multer.diskStorage({
+  destination: './public/uploads',
+  //function (req, file, cb) {cb(null, 'uploads') },
+  filename: function (req, file, cb) {
+    cb( null, req.params.id + '.' + file.originalname.split('.').pop())
+  }
+})
+const upload = multer ({
+  storage: storage,
+  limits: { fileSize: 1024 * 1024 }
+})
+
 
 /* ------------------ router session ----------------- */
 //--------------------- usuario logeado?
@@ -107,6 +120,17 @@ sessionRouter.post(
     
   }
 )
+
+
+//--------- post upload image
+sessionRouter.post(
+  '/register/img/:id',
+  upload.single('userFileImage'),
+  (req, res) => {
+    res.status(200)
+  }
+)
+
 
 
 //------------ get cerrar sesion

@@ -19,7 +19,7 @@ async function main(){
    
     //--login con usuario y contrasena ------------------------------------
     document.getElementById("loginBtn").addEventListener("click", ev => { 
-      if ( validateObject ({ a: logUser.value , b: logPassword.value })) {
+      if ( validateObject ({ usuario: logUser.value , clave: logPassword.value })) {
         toast('Debe completar todos los datos', "#f75e25", "#ff4000")
       
       } else {    
@@ -44,6 +44,7 @@ async function main(){
         }) 
          
         .catch(error => {
+          toast("Error de autenticacion", "#f75e25", "#ff4000")
           console.error('Se produjo un error: ', error)
         })
       }

@@ -42,7 +42,7 @@ function validateObject(objeto) { // retorna true si hay algun campo vacio
 //--------------------------- Templates
 // Session
 
-function loginTemplate () {
+function loginTemplate () { // --- Dialogo inicial de logueo o registro
   return `
   <div class="container alert alert-primary text-center" role="alert">
     <h3>LOGIN DE USUARIO</h3>   
@@ -66,26 +66,36 @@ function loginTemplate () {
   `
 }
 
-function logOkTemplate ( userData ) {
+function logOkTemplate ( userData ) { // --- Datos del usuario una vez logeado
   return `
   <div class="container alert alert-primary text-center">
-    <div class="row justify-content-between">
-      <div class="col-1">FOTO</div>
-      <div class="col">Bienvenido ${userData.username}</div>
-      <div class="col-2"><button id="logoutBtn" type="" class="btn btn-secondary">LOGOUT</button></div>
-    </div>
-    <div class="row justify-content-between">
-      <div class="col">Nombre: ${userData.name}</div>
-      <div class="col">Edad: ${userData.age}</div>
-      <div class="col">Direccion ${userData.address}</div>
-      <div class="col">Telefono ${userData.phone}</div>
-      <div class="col-2"><button id="cartBtn" type="" class="btn btn-success"> CART </button></div>
+    <div class="row">
+      <div class="col-3">
+        <img src="${userData.photo}" alt="user photo" width="200px" height="200px">
+      </div>
+      <div class="col-9">          
+        <div class="container">
+          <div class="row justify-content-between mt-2">
+            <div class="col"><h5 class="card-title">Bienvenido ${userData.username}</h5></div>
+            <div class="col-2"><button id="logoutBtn" type="" class="btn btn-secondary">LOGOUT</button></div>
+          </div>
+          <div class="row justify-content-between mt-3">
+            <div class="col">Nombre: ${userData.name}</div>
+            <div class="col text-start">Edad: ${userData.age}</div>
+          </div>
+          <div class="row justify-content-between mt-3">
+            <div class="col">Direccion: ${userData.address}</div>
+            <div class="col text-start">Telefono: ${userData.phone}</div>
+            <div class="col-2"><button id="cartBtn" type="" class="btn btn-success"> CART </button></div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
   `
 }
 
-function logByeTemplate ( user ) {
+function logByeTemplate ( user ) { // ---- Dialogo de cierre de sesion
   return `
   <div class="container alert alert-primary text-center" role="alert">
     <div class="row">
@@ -100,7 +110,7 @@ function logByeTemplate ( user ) {
 
 // Productos
 
-function productsTable( products ) {
+function productsTable( products ) { // --- Tabla de productos
 
   let htmlToRender = `
   <div class="container alert alert-primary text-center">
@@ -128,7 +138,7 @@ function productsTable( products ) {
 
 
 // Cart
-function cartViewTemplate( userCart, productsData ) {
+function cartViewTemplate( userCart, productsData ) { // --- Muestra cart
  
   let total = 0
   let htmlToRender = `
@@ -189,7 +199,7 @@ function cartViewTemplate( userCart, productsData ) {
 
 
 // register user
-function registerNewUserTemplate () {
+function registerNewUserTemplate () { // --- Dialogo de ingreso de datos de registro
   return `  
   <div class="container alert alert-primary text-center">
     <div class="row">
@@ -218,7 +228,7 @@ function registerNewUserTemplate () {
     </div>
     <div class="row">
       <div class="mb-3 col">
-        <label for="userImage" class="form-label">Selecione una imagen para su usuario</label>
+        <label for="userImage" class="form-label">Selecione una imagen (hasta 1Mb) para su usuario</label>
         <input type="file" class="form-control" id="userImage" name="userImage">
       </div>
       <div class="mb-3 col">

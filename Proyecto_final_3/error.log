@@ -43,3 +43,7 @@
 [2023-03-27T12:44:57.953] [ERROR] error - Error: ReferenceError: isInCart is not defined
 [2023-03-27T13:09:15.238] [ERROR] error - Error: TypeError: Cannot read properties of undefined (reading 'cart')
 [2023-03-27T13:09:24.417] [ERROR] error - Error: TypeError: Cannot read properties of undefined (reading 'cart')
+[2023-03-29T12:30:20.489] [ERROR] error - Se ha produciodo error ValidationError: photo: Path `photo` is required. al intentar agregar un usuario a la base de datos
+[2023-03-29T12:33:18.899] [ERROR] error - Se ha produciodo error ValidationError: photo: Path `photo` is required. al intentar agregar un usuario a la base de datos
+[2023-03-29T12:38:08.879] [ERROR] error - Se ha produciodo error ValidationError: photo: Path `photo` is required. al intentar agregar un usuario a la base de datos
+[2023-03-29T12:43:02.345] [ERROR] error - Se ha produciodo error ReferenceError: con is not defined al intentar agregar un usuario a la base de datos

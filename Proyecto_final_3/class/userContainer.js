@@ -113,17 +113,6 @@ class Container { // MongoDB
   }
 
 
-  async getAllCartProducts ( username ) {
-    try {
-      await connectToDd()
-      const cart = await this.schema.find({ username: username })
-      return cart
-    } catch(err) {
-      loggererr.error(`Error: ${err} al intentar recuperar carrito de ${username}`)
-    }
-  }
-
-
   async delCart ( username ) {
     try {
       await connectToDd()

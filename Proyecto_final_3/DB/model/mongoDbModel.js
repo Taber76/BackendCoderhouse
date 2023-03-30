@@ -15,7 +15,8 @@ const productSchema = new Schema({
 
 const cartSchema = new Schema({
     timestamp: { type: Date, default: Date.now },
-    products: { type: Array, required: true }
+    products: { type: Array, required: true },
+    username: { type: String, required: true }
 })
 
 
@@ -27,7 +28,7 @@ const userSchema = new Schema({
   age: { type: Number, required: true },
   phone: { type: String, required: true },
   photo: { type: String, required: true },
-  cart: { type: Array, required: true } // el array se almacenara con el siguiente formato [ idProd1, cantProd1, idProd2, cantProd2, .... ]
+  cart: { type: Array, required: true } // el array se almacenara con el siguiente formato [ {idProd: , cant: }, { ..., ... }, .... ]
 })
 
 
